@@ -9,8 +9,9 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
+
 const App = (props) => {
-  const {movieTitle, genre, releaseDate} = props;
+  const {movieTitle, genre, releaseDate, films} = props;
 
   return <BrowserRouter>
     <Switch>
@@ -25,7 +26,7 @@ const App = (props) => {
         <AuthScreen />
       </Route>
       <Route exact path="/mylist">
-        <MyListScreen />
+        <MyListScreen films={films}/>
       </Route>
       <Route exact path="/films/:id">
         <MoviePageScreen />
@@ -45,6 +46,8 @@ App.propTypes = {
   movieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
+  films: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired
 };
 
 export default App;
