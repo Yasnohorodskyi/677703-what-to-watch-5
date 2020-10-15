@@ -31,14 +31,14 @@ const App = (props) => {
       <Route exact path="/mylist">
         <MyListScreen films={films}/>
       </Route>
-      <Route exact path="/films/:id">
-        <MoviePageScreen />
-      </Route>
+      <Route exact path="/films/:id"
+        component={MoviePageScreen}
+      />
       <Route exact path="/films/:id/review">
         <AddReviewScreen />
       </Route>
       <Route exact path="/player/:id">
-        <PlayerScreen />
+        <PlayerScreen film={films[3]}/>
       </Route>
     </Switch>
 
