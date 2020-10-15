@@ -9,6 +9,8 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
+import {filmType} from "../../custom-prop-types.js";
+
 
 const App = (props) => {
   const {movieTitle, genre, releaseDate, films} = props;
@@ -20,6 +22,7 @@ const App = (props) => {
           movieTitle={movieTitle}
           genre={genre}
           releaseDate={releaseDate}
+          films={films}
         />
       </Route>
       <Route exact path="/login">
@@ -46,8 +49,7 @@ App.propTypes = {
   movieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
-  films: PropTypes.array.isRequired,
-  reviews: PropTypes.array.isRequired
+  films: PropTypes.arrayOf(filmType).isRequired,
 };
 
 export default App;
