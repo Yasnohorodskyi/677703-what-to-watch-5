@@ -8,7 +8,7 @@ class SmallMovieCard extends PureComponent {
   }
 
   render() {
-    const {film, onMouseOver} = this.props;
+    const {film, onMouseOver, onMovieCardClick} = this.props;
     const {
       title,
       coverImg,
@@ -19,6 +19,9 @@ class SmallMovieCard extends PureComponent {
       <article className="small-movie-card catalog__movies-card"
         onMouseOver={() => {
           onMouseOver(id);
+        }}
+        onClick={() => {
+          onMovieCardClick(id);
         }}
       >
         <div className="small-movie-card__image">
@@ -34,6 +37,7 @@ class SmallMovieCard extends PureComponent {
 
 SmallMovieCard.propTypes = {
   onMouseOver: PropTypes.func.isRequired,
+  onMovieCardClick: PropTypes.func.isRequired,
   film: filmType
 };
 

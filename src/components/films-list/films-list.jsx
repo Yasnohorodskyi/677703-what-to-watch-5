@@ -12,9 +12,8 @@ class FilmsList extends PureComponent {
     };
   }
 
-
   render() {
-    const {films} = this.props;
+    const {films, history} = this.props;
 
     return (
       <div className="catalog__movies-list">
@@ -26,6 +25,7 @@ class FilmsList extends PureComponent {
               onMouseOver={(hoverID) => {
                 this.setState({currentFilmID: hoverID});
               }}
+              onMovieCardClick={() => history.push(`/films/${this.state.currentFilmID}`)}
             />
           );
         })}
@@ -36,6 +36,7 @@ class FilmsList extends PureComponent {
 
 FilmsList.propTypes = {
   films: PropTypes.arrayOf(filmType).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default FilmsList;

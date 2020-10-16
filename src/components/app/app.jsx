@@ -17,22 +17,37 @@ const App = (props) => {
 
   return <BrowserRouter>
     <Switch>
-      <Route exact path="/">
-        <MainScreen
-          movieTitle={movieTitle}
-          genre={genre}
-          releaseDate={releaseDate}
-          films={films}
-        />
-      </Route>
+      <Route exact path="/"
+        render={({history}) => (
+          <MainScreen
+            movieTitle={movieTitle}
+            genre={genre}
+            releaseDate={releaseDate}
+            films={films}
+            history={history}
+          />
+        )}
+      />
       <Route exact path="/login">
         <AuthScreen />
       </Route>
-      <Route exact path="/mylist">
-        <MyListScreen films={films}/>
-      </Route>
+      <Route exact path="/mylist"
+        render={({history}) => (
+          <MyListScreen
+            films={films}
+            onMovieCardClick={(filmID) => history.push(`/films/${filmID}`)}
+            history={history}
+          />
+        )}
+      />
       <Route exact path="/films/:id"
-        component={MoviePageScreen}
+        render={({match, history}) => (
+          <MoviePageScreen
+            films={films}
+            match={match}
+            history={history}
+          />
+        )}
       />
       <Route exact path="/films/:id/review">
         <AddReviewScreen />

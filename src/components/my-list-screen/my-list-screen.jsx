@@ -37,6 +37,7 @@ class MyListScreen extends PureComponent {
 
           <FilmsList
             films={films}
+            history={this.props.history}
           />
         </section>
 
@@ -60,6 +61,7 @@ class MyListScreen extends PureComponent {
 
 MyListScreen.propTypes = {
   films: PropTypes.arrayOf(filmType).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default MyListScreen;
