@@ -9,32 +9,51 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
+import {filmType} from "../../custom-prop-types.js";
+
+
 const App = (props) => {
-  const {movieTitle, genre, releaseDate} = props;
+  const {movieTitle, genre, releaseDate, films} = props;
 
   return <BrowserRouter>
     <Switch>
-      <Route exact path="/">
-        <MainScreen
-          movieTitle={movieTitle}
-          genre={genre}
-          releaseDate={releaseDate}
-        />
-      </Route>
+      <Route exact path="/"
+        render={({history}) => (
+          <MainScreen
+            movieTitle={movieTitle}
+            genre={genre}
+            releaseDate={releaseDate}
+            films={films}
+            history={history}
+          />
+        )}
+      />
       <Route exact path="/login">
         <AuthScreen />
       </Route>
-      <Route exact path="/mylist">
-        <MyListScreen />
-      </Route>
-      <Route exact path="/films/:id">
-        <MoviePageScreen />
-      </Route>
+      <Route exact path="/mylist"
+        render={({history}) => (
+          <MyListScreen
+            films={films}
+            onMovieCardClick={(filmID) => history.push(`/films/${filmID}`)}
+            history={history}
+          />
+        )}
+      />
+      <Route exact path="/films/:id"
+        render={({match, history}) => (
+          <MoviePageScreen
+            films={films}
+            match={match}
+            history={history}
+          />
+        )}
+      />
       <Route exact path="/films/:id/review">
         <AddReviewScreen />
       </Route>
       <Route exact path="/player/:id">
-        <PlayerScreen />
+        <PlayerScreen film={films[3]}/>
       </Route>
     </Switch>
 
@@ -45,6 +64,7 @@ App.propTypes = {
   movieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmType).isRequired,
 };
 
 export default App;
