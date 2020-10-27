@@ -1,23 +1,135 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {filmType} from "../../custom-prop-types";
+import {filmType, reviewType} from "../../custom-prop-types";
 import {getRatingDesc} from "../../utils.js";
 
 import FilmsList from "../films-list/films-list";
+import Tabs from "../tabs/tabs";
 
-const MoviePageScreen = (props) => {
-  const {films} = props;
-  const filmID = parseInt(props.match.params.id, 10);
-  const currentFilm = films.find((film) => film.id === filmID);
+const TABS_LABELS = [`Overview`, `Details`, `Reviews`];
+
+const getOverviewContent = (currentFilm) => {
   const {
-    title,
     description,
-    fullImg,
-    genre,
-    releaseDate,
     rating,
     director,
     starring,
+  } = currentFilm;
+
+  return (
+    <React.Fragment>
+      <div className="movie-rating">
+        <div className="movie-rating__score">{rating.value}</div>
+        <p className="movie-rating__meta">
+          <span className="movie-rating__level">{getRatingDesc(rating.value)}</span>
+          <span className="movie-rating__count">{rating.count} ratings</span>
+        </p>
+      </div>
+
+      <div className="movie-card__text">
+        <p>{description}</p>
+
+        <p className="movie-card__director"><strong>Director: {director}</strong></p>
+
+        <p className="movie-card__starring"><strong>Starring: {starring.slice(0, 4).join(`, `)} and other</strong></p>
+      </div>
+    </React.Fragment>
+  );
+};
+
+const getDetailsContent = (currentFilm) => {
+  const {
+    duration,
+    releaseDate,
+    director,
+    starring,
+    genre
+  } = currentFilm;
+
+  return (
+    <div className="movie-card__text movie-card__row">
+      <div className="movie-card__text-col">
+        <p className="movie-card__details-item">
+          <strong className="movie-card__details-name">Director</strong>
+          <span className="movie-card__details-value">{director}</span>
+        </p>
+        <p className="movie-card__details-item">
+          <strong className="movie-card__details-name">Starring</strong>
+          <span className="movie-card__details-value">
+            {starring.slice(0, -1).map((star) =>
+              <React.Fragment key={star}>
+                {`${star}, `} <br />
+              </React.Fragment>
+            )}
+            {starring.slice(-1)}
+          </span>
+        </p>
+      </div>
+
+      <div className="movie-card__text-col">
+        <p className="movie-card__details-item">
+          <strong className="movie-card__details-name">Run Time</strong>
+          <span className="movie-card__details-value">{duration}</span>
+        </p>
+        <p className="movie-card__details-item">
+          <strong className="movie-card__details-name">Genre</strong>
+          <span className="movie-card__details-value">{genre}</span>
+        </p>
+        <p className="movie-card__details-item">
+          <strong className="movie-card__details-name">Released</strong>
+          <span className="movie-card__details-value">{releaseDate}</span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const getReviewContent = (review, index) => {
+  const {
+    text,
+    author,
+    dateTime,
+    rating,
+  } = review;
+
+  return (
+    <div className="review" key={`review-${index}`}>
+      <blockquote className="review__quote">
+        <p className="review__text">{text}</p>
+
+        <footer className="review__details">
+          <cite className="review__author">{author}</cite>
+          <time className="review__date" dateTime="2016-12-24">{dateTime}</time>
+        </footer>
+      </blockquote>
+
+      <div className="review__rating">{rating}</div>
+    </div>
+  );
+};
+const getReviewsContent = (reviews) => {
+  return (
+    <div className="movie-card__reviews movie-card__row">
+      <div className="movie-card__reviews-col">
+        {reviews.slice(0, 3).map((review, index) => getReviewContent(review, index))}
+      </div>
+      <div className="movie-card__reviews-col">
+        {reviews.slice(3, 6).map((review, index) => getReviewContent(review, index))}
+      </div>
+    </div>
+  );
+};
+
+const MoviePageScreen = (props) => {
+  const {films, reviews} = props;
+  const filmID = parseInt(props.match.params.id, 10);
+
+  const currentFilm = films.find((film) => film.id === filmID);
+  const {
+    title,
+    fullImg,
+    genre,
+    releaseDate,
     similarFilmsID,
   } = currentFilm;
 
@@ -26,6 +138,7 @@ const MoviePageScreen = (props) => {
           (similarID) => film.id === similarID
       )
   );
+  const currentFilmReviews = reviews.find((review) => review.filmId === filmID);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -86,35 +199,14 @@ const MoviePageScreen = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <nav className="movie-nav movie-card__nav">
-              <ul className="movie-nav__list">
-                <li className="movie-nav__item movie-nav__item--active">
-                  <a href="#" className="movie-nav__link">Overview</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Details</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Reviews</a>
-                </li>
-              </ul>
-            </nav>
+            <Tabs
+              labels={TABS_LABELS}
 
-            <div className="movie-rating">
-              <div className="movie-rating__score">{rating.value}</div>
-              <p className="movie-rating__meta">
-                <span className="movie-rating__level">{getRatingDesc(rating.value)}</span>
-                <span className="movie-rating__count">{rating.count} ratings</span>
-              </p>
-            </div>
-
-            <div className="movie-card__text">
-              <p>{description}</p>
-
-              <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-              <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)} and other</strong></p>
-            </div>
+            >
+              {getOverviewContent(currentFilm)}
+              {getDetailsContent(currentFilm)}
+              {getReviewsContent(currentFilmReviews.reviews)}
+            </Tabs>
           </div>
         </div>
       </div>
@@ -147,6 +239,16 @@ const MoviePageScreen = (props) => {
   </React.Fragment>;
 };
 
-MoviePageScreen.propTypes = PropTypes.shape(filmType).isRequred;
+MoviePageScreen.propTypes = {
+  // films: PropTypes.arrayOf(filmType).isRequred,
+  films: PropTypes.arrayOf(filmType).isRequired,
+  reviews: PropTypes.arrayOf(reviewType).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.object,
+};
 
 export default MoviePageScreen;
