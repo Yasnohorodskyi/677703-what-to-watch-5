@@ -9,11 +9,18 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
-import {filmType} from "../../custom-prop-types.js";
+import {filmType, reviewType} from "../../custom-prop-types.js";
 
 
 const App = (props) => {
-  const {movieTitle, genre, releaseDate, films} = props;
+  const {
+    movieTitle,
+    genre,
+    releaseDate,
+    films,
+    reviews,
+  } = props;
+
 
   return <BrowserRouter>
     <Switch>
@@ -44,6 +51,7 @@ const App = (props) => {
         render={({match, history}) => (
           <MoviePageScreen
             films={films}
+            reviews={reviews}
             match={match}
             history={history}
           />
@@ -65,6 +73,7 @@ App.propTypes = {
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
   films: PropTypes.arrayOf(filmType).isRequired,
+  reviews: PropTypes.arrayOf(reviewType).isRequired,
 };
 
 export default App;

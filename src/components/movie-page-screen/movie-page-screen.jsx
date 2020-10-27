@@ -217,7 +217,7 @@ const MoviePageScreen = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <FilmsList
-          films={similarFilms}
+          films={similarFilms.slice(0, 4)}
           history={props.history}
         />
       </section>
