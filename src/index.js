@@ -4,6 +4,7 @@ import App from "./components/app/app";
 import films from "./mocks/films.js";
 import reviews from "./mocks/reviews.js";
 
+
 const Settings = {
   MOVIE_TITLE: `The Grand Budapest Hotel`,
   GENRE: `Drama`,
