@@ -9,16 +9,12 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
-import {filmType, reviewType} from "../../custom-prop-types.js";
-
 
 const App = (props) => {
   const {
     movieTitle,
     genre,
     releaseDate,
-    films,
-    reviews,
   } = props;
 
 
@@ -30,7 +26,6 @@ const App = (props) => {
             movieTitle={movieTitle}
             genre={genre}
             releaseDate={releaseDate}
-            films={films}
             history={history}
           />
         )}
@@ -41,7 +36,6 @@ const App = (props) => {
       <Route exact path="/mylist"
         render={({history}) => (
           <MyListScreen
-            films={films}
             onMovieCardClick={(filmID) => history.push(`/films/${filmID}`)}
             history={history}
           />
@@ -50,8 +44,6 @@ const App = (props) => {
       <Route exact path="/films/:id"
         render={({match, history}) => (
           <MoviePageScreen
-            films={films}
-            reviews={reviews}
             match={match}
             history={history}
           />
@@ -61,7 +53,7 @@ const App = (props) => {
         <AddReviewScreen />
       </Route>
       <Route exact path="/player/:id">
-        <PlayerScreen film={films[3]}/>
+        <PlayerScreen />
       </Route>
     </Switch>
 
@@ -72,8 +64,6 @@ App.propTypes = {
   movieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
-  films: PropTypes.arrayOf(filmType).isRequired,
-  reviews: PropTypes.arrayOf(reviewType).isRequired,
 };
 
 export default App;
