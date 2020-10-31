@@ -14,6 +14,9 @@ export const getRatingDesc = (rating) => {
   } else if (rating === 10) {
     level = RatingDesc.AWESOME;
   }
-
   return level;
+};
+
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
 };
