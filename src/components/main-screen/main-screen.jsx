@@ -9,31 +9,17 @@ import FilmsList from "../films-list/films-list";
 import {connect} from "react-redux";
 
 
-const getGenres = (films) => {
-  const genres = [`All genres`];
-
-  films.forEach((film) => {
-    if (!genres.includes(film.genre)) {
-      genres.push(film.genre);
-    }
-  });
-
-  return genres;
-};
-
 const MainScreen = (props) => {
   const {
     movieTitle,
     genre,
     releaseDate,
-    allFilms,
+    allGenres,
     genreFilms,
     activeGenre,
     onGenreChange,
     history,
   } = props;
-
-  const genres = getGenres(allFilms);
 
   return <React.Fragment>
     <section className="movie-card">
@@ -100,7 +86,7 @@ const MainScreen = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenresList
-          genres={genres}
+          genres={allGenres}
           activeGenre={activeGenre}
           onGenreChange={onGenreChange}
         />
@@ -136,15 +122,16 @@ MainScreen.propTypes = {
   movieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
-  allFilms: PropTypes.arrayOf(filmType).isRequired,
   history: PropTypes.object.isRequired,
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
+  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const mapStateToProps = (state) => ({
   genreFilms: state.genreFilms,
+  allGenres: state.allGenres,
   allFilms: state.allFilms,
   activeGenre: state.genre,
 });

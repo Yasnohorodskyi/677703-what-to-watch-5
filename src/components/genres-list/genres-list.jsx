@@ -16,13 +16,17 @@ const GenresList = (props) => {
   };
   return (
     <ul className="catalog__genres-list">
-      {genres.map((genre) => {
-        return (
-          <li key={genre} className={`catalog__genres-item ${getActiveClass(genre)}`}>
-            <a href="#" className="catalog__genres-link" onClick={handleGenreClick} data-genre={genre}>{genre}</a>
-          </li>
-        );
-      })}
+      {genres.map((genre) => (
+        <li key={genre} className={`catalog__genres-item ${getActiveClass(genre)}`}>
+          <a href="#"
+            className="catalog__genres-link"
+            onClick={handleGenreClick}
+            data-genre={genre}
+          >
+            {genre}
+          </a>
+        </li>
+      ))}
     </ul>
   );
 };
