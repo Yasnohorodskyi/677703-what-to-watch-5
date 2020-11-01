@@ -6,6 +6,7 @@ import {ActionCreator} from "../../store/action.js";
 
 import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
+
 import {connect} from "react-redux";
 
 
@@ -95,10 +96,6 @@ const MainScreen = (props) => {
           films={genreFilms}
           history={history}
         />
-
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
       </section>
 
       <footer className="page-footer">
