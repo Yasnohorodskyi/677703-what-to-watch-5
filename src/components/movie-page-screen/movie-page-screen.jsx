@@ -8,6 +8,7 @@ import Tabs from "../tabs/tabs";
 
 const TABS_LABELS = [`Overview`, `Details`, `Reviews`];
 
+
 const getOverviewContent = (currentFilm) => {
   const {
     description,
@@ -16,6 +17,7 @@ const getOverviewContent = (currentFilm) => {
     starring,
   } = currentFilm;
 
+  const shortStarring = starring.slice(0, 4).join(`, `);
   return (
     <React.Fragment>
       <div className="movie-rating">
@@ -31,7 +33,7 @@ const getOverviewContent = (currentFilm) => {
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="movie-card__starring"><strong>Starring: {starring.slice(0, 4).join(`, `)} and other</strong></p>
+        <p className="movie-card__starring"><strong>Starring: {shortStarring} and other</strong></p>
       </div>
     </React.Fragment>
   );

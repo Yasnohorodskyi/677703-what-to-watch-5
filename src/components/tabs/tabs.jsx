@@ -17,6 +17,8 @@ class Tabs extends PureComponent {
       labels,
       children,
     } = this.props;
+
+    const getActiveClass = (label) => this.state.activeTab === label ? `movie-nav__item--active` : ``;
     return (
       <React.Fragment>
         <nav className="movie-nav movie-card__nav">
@@ -26,7 +28,7 @@ class Tabs extends PureComponent {
                 <Tab
                   key={`tab-${index}`}
                   label={label}
-                  className={`movie-nav__item ${this.state.activeTab === label ? `movie-nav__item--active` : ``}`}
+                  className={`movie-nav__item ${getActiveClass}`}
                   onTabClick={(currentLabel) => {
                     this.setState({activeTab: currentLabel});
                   }}

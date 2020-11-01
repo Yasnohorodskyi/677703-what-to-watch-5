@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
+import {connect} from "react-redux";
 
 class PlayerScreen extends PureComponent {
   constructor(props) {
@@ -8,10 +9,14 @@ class PlayerScreen extends PureComponent {
   }
 
   render() {
-    const {film} = this.props;
     const {
-      title,
-    } = film;
+      allFilms,
+      match,
+    } = this.props;
+
+    const currentId = match.params.id;
+    const currentFilm = allFilms.find((film) => film.id === currentId);
+
     return (
       <div className="player">
         <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
@@ -35,7 +40,7 @@ class PlayerScreen extends PureComponent {
               <span>Play</span>
             </button>
             <div className="player__name">
-              {title}
+              {currentFilm.title}
             </div>
 
             <button type="button" className="player__full-screen">
@@ -51,6 +56,19 @@ class PlayerScreen extends PureComponent {
   }
 }
 
-PlayerScreen.propTypes = PropTypes.shape(filmType).isRequired;
+PlayerScreen.propTypes = {
+  allFilms: PropTypes.arrayOf(filmType).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+};
 
-export default PlayerScreen;
+
+const mapStateToProps = (state) => ({
+  allFilms: state.allFilms,
+});
+
+export {PlayerScreen};
+export default connect(mapStateToProps)(PlayerScreen);

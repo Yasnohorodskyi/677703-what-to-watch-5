@@ -7,15 +7,18 @@ const Tab = (props) => {
     className,
     onTabClick,
   } = props;
+
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    onTabClick(label);
+  };
+
   return (
     <li className={className}>
       <a
         href={`#`}
         className={`movie-nav__link`}
-        onClick={(evt) => {
-          evt.preventDefault();
-          onTabClick(label);
-        }}
+        onClick={handleClick}
       >
         {label}
       </a>
