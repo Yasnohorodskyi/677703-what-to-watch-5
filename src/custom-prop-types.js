@@ -28,3 +28,9 @@ export const reviewType = PropTypes.shape({
     text: PropTypes.string.isRequired,
   })),
 });
+
+export const tabType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
+}).isRequired;

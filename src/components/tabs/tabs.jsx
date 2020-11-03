@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Tab from "../tab/tab.jsx";
+import {tabType} from "../../custom-prop-types.js";
 
 
 class Tabs extends PureComponent {
@@ -8,48 +9,40 @@ class Tabs extends PureComponent {
     super(props);
 
     this.state = {
-      activeTab: this.props.labels[0],
+      activeTabId: this.props.tabs[0].id,
     };
   }
 
   render() {
-    const {
-      labels,
-      children,
-    } = this.props;
+    const {tabs} = this.props;
 
-    const getActiveClass = (label) => this.state.activeTab === label ? `movie-nav__item--active` : ``;
     return (
       <React.Fragment>
         <nav className="movie-nav movie-card__nav">
           <ul className="movie-nav__list">
-            {labels.map((label, index) => {
+            {tabs.map((tab, index) => {
               return (
                 <Tab
                   key={`tab-${index}`}
-                  label={label}
-                  className={`movie-nav__item ${getActiveClass}`}
-                  onTabClick={(currentLabel) => {
-                    this.setState({activeTab: currentLabel});
+                  tab={tab}
+                  onTabClick={(id) => {
+                    this.setState({activeTabId: id});
                   }}
-                  activeTab={this.state.activeTab}
+                  isActive={this.state.activeTabId === tab.id}
                 />
               );
             })}
           </ul>
         </nav>
 
-        {this.state.activeTab === labels[0] && children[0]}
-        {this.state.activeTab === labels[1] && children[1]}
-        {this.state.activeTab === labels[2] && children[2]}
+        {tabs.find(({id}) => id === this.state.activeTabId).render()}
       </React.Fragment>
     );
   }
 }
 
 Tabs.propTypes = {
-  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  tabs: PropTypes.arrayOf(tabType).isRequired,
 };
 
 export default Tabs;

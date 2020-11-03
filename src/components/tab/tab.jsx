@@ -1,35 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {tabType} from "../../custom-prop-types.js";
 
 const Tab = (props) => {
   const {
-    label,
-    className,
+    tab,
+    isActive,
     onTabClick,
   } = props;
 
   const handleClick = (evt) => {
     evt.preventDefault();
-    onTabClick(label);
+    onTabClick(tab.id);
   };
 
   return (
-    <li className={className}>
+    <li className={`movie-nav__item ${isActive && `movie-nav__item--active`}`}>
       <a
         href={`#`}
-        className={`movie-nav__link`}
+        className="movie-nav__link"
         onClick={handleClick}
       >
-        {label}
+        {tab.title}
       </a>
     </li>
   );
 };
 
-export default Tab;
-
 Tab.propTypes = {
-  label: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  tab: tabType,
+  isActive: PropTypes.bool.isRequired,
   onTabClick: PropTypes.func.isRequired,
 };
+
+export default Tab;
+
+
