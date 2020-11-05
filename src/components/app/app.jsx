@@ -9,6 +9,10 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
+import withAuthHandling from "../../hocs/with-auth-handling/with-auth-handling";
+
+
+const AuthScreenWrapped = withAuthHandling(AuthScreen);
 
 const App = (props) => {
   const {
@@ -31,7 +35,7 @@ const App = (props) => {
         )}
       />
       <Route exact path="/login">
-        <AuthScreen />
+        <AuthScreenWrapped />
       </Route>
       <Route exact path="/mylist"
         render={({history}) => (
