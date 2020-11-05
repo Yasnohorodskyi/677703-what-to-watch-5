@@ -40,7 +40,6 @@ const App = (props) => {
       <Route exact path="/mylist"
         render={({history}) => (
           <MyListScreen
-            onMovieCardClick={(filmID) => history.push(`/films/${filmID}`)}
             history={history}
           />
         )}
