@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 
+import withVideoHandling from "../../hocs/with-video-handling/with-video-handling";
+
+const VideoPlayerWrapped = withVideoHandling(VideoPlayer);
+
 const PLAYING_TIMEOUT = 1000;
 
 class SmallMovieCard extends PureComponent {
@@ -45,14 +49,13 @@ class SmallMovieCard extends PureComponent {
         }}
       >
         <div className="small-movie-card__image">
-          <VideoPlayer
+          <VideoPlayerWrapped
             src={video}
             coverImg={coverImg}
             onVideoMount={(videoRef) => {
               this.setState({videoRef});
             }}
           />
-          {/* <img src={`/img/${coverImg}`} alt={title} width="280" height="175" /> */}
         </div>
         <h3 className="small-movie-card__title">
           <a className="small-movie-card__link" href="movie-page.html">{title}</a>
