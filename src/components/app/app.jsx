@@ -55,8 +55,14 @@ const App = (props) => {
       <Route exact path="/films/:id/review">
         <AddReviewScreen />
       </Route>
-      <Route exact path="/player/:id">
-        <PlayerScreen />
+      <Route exact path="/player/:id"
+        render={({match}) => (
+          <PlayerScreen
+            match={match}
+          />
+        )}
+      >
+
       </Route>
     </Switch>
 
