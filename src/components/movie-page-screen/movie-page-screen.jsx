@@ -7,6 +7,10 @@ import FilmsList from "../films-list/films-list";
 import Tabs from "../tabs/tabs";
 import {connect} from "react-redux";
 
+import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
+
+const TabsWrapped = withTabsHandling(Tabs);
+
 const TabLabels = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
@@ -222,7 +226,7 @@ const MoviePageScreen = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <Tabs
+            <TabsWrapped
               tabs={tabs}
             />
           </div>
