@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import FilmsList from "../films-list/films-list";
 import {filmType} from "../../custom-prop-types.js";
+
+import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+
+
+const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 const MyListScreen = (props) => {
   const {films, history} = props;
@@ -29,7 +36,7 @@ const MyListScreen = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList
+        <FilmsListWrapped
           films={films}
           history={history}
         />
@@ -57,4 +64,9 @@ MyListScreen.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default MyListScreen;
+const mapStateToProps = (state) => ({
+  films: state.allFilms,
+});
+
+export {MyListScreen};
+export default connect(mapStateToProps)(MyListScreen);

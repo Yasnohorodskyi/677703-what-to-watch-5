@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
 import {Link} from "react-router-dom";
 import {ActionCreator} from "../../store/action.js";
+import {connect} from "react-redux";
 
 import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
 
-import {connect} from "react-redux";
+import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 
+
+const FilmsListWrapped = withFilmsListHandling(FilmsList);
 
 const MainScreen = (props) => {
   const {
@@ -92,7 +95,7 @@ const MainScreen = (props) => {
           onGenreChange={onGenreChange}
         />
 
-        <FilmsList
+        <FilmsListWrapped
           films={genreFilms}
           history={history}
         />

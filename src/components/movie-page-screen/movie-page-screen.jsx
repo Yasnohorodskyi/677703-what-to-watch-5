@@ -8,7 +8,10 @@ import Tabs from "../tabs/tabs";
 import {connect} from "react-redux";
 
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
+import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 
+
+const FilmsListWrapped = withFilmsListHandling(FilmsList);
 const TabsWrapped = withTabsHandling(Tabs);
 
 const TabLabels = {
@@ -238,7 +241,7 @@ const MoviePageScreen = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <FilmsList
+        <FilmsListWrapped
           films={similarFilms.slice(0, 4)}
           history={props.history}
         />
