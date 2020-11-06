@@ -11,12 +11,11 @@ const withFilmsListHandling = (Component) => {
       super(props);
 
       this.state = {
-        currentFilmID: -1,
         renderedFilmsCount: DEFAULT_RENDERED_FILMS_COUNT,
       };
 
       this._handleMoreButtonClick = this._handleMoreButtonClick.bind(this);
-      this._handleMouseOver = this._handleMouseOver.bind(this);
+      // this._handleMouseOver = this._handleMouseOver.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -47,19 +46,13 @@ const withFilmsListHandling = (Component) => {
       return false;
     }
 
-    _handleMouseOver(hoverID) {
-      this.setState({currentFilmID: hoverID});
-    }
-
     render() {
       return (
         <Component
           {...this.props}
           renderedFilmsCount={this.state.renderedFilmsCount}
-          onMouseOver={this._handleMouseOver}
           onMoreButtonClick={this._handleMoreButtonClick}
           isMoreButtonVisible={this._getMoreButtonVisibility()}
-          currentFilmID={this.state.currentFilmID}
         />
       );
     }

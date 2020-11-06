@@ -16,8 +16,8 @@ const FilmsList = (props) => {
     history,
     isMoreButtonVisible,
     onMoreButtonClick,
-    currentFilmID,
-    onMouseOver,
+    activeItemId,
+    updateActiveItem,
     renderedFilmsCount,
   } = props;
 
@@ -31,8 +31,8 @@ const FilmsList = (props) => {
             <SmallMovieCardWrapped
               key={`${i}-film`}
               film={film}
-              onMouseOver={onMouseOver}
-              onMovieCardClick={() => history.push(`/films/${currentFilmID}`)}
+              onMouseOver={updateActiveItem}
+              onMovieCardClick={() => history.push(`/films/${activeItemId}`)}
             />
           );
         })}
@@ -54,8 +54,8 @@ FilmsList.propTypes = {
   history: PropTypes.object.isRequired,
   isMoreButtonVisible: PropTypes.bool.isRequired,
   onMoreButtonClick: PropTypes.func.isRequired,
-  currentFilmID: PropTypes.number.isRequired,
-  onMouseOver: PropTypes.func.isRequired,
+  activeItemId: PropTypes.number.isRequired,
+  updateActiveItem: PropTypes.func.isRequired,
   renderedFilmsCount: PropTypes.number.isRequired,
 };
 

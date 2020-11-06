@@ -9,9 +9,10 @@ import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
 
-const FilmsListWrapped = withFilmsListHandling(FilmsList);
+const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 const MainScreen = (props) => {
   const {

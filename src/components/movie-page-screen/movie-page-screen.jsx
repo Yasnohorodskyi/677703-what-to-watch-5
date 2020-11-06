@@ -9,9 +9,10 @@ import {connect} from "react-redux";
 
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
 
-const FilmsListWrapped = withFilmsListHandling(FilmsList);
+const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 const TabsWrapped = withTabsHandling(Tabs);
 
 const TabLabels = {
