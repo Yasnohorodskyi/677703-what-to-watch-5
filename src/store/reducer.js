@@ -3,13 +3,27 @@ import {ActionType} from "./action.js";
 import allFilms from "../mocks/films.js";
 import allReviews from "../mocks/reviews.js";
 
+const getGenres = (films) => {
+  const genres = [`All genres`];
+
+  films.forEach((film) => {
+    if (!genres.includes(film.genre)) {
+      genres.push(film.genre);
+    }
+  });
+
+  return genres;
+};
+
+const allGenres = getGenres(allFilms);
+
 const initialState = {
   genre: `All genres`,
   allFilms,
+  allGenres,
   allReviews,
   genreFilms: allFilms,
 };
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {

@@ -5,3 +5,5 @@ export const RatingDesc = {
   VERY_GOOD: `Very good`,
   AWESOME: `Awesome`,
 };
+
+export const DEFAULT_RENDERED_FILMS_COUNT = 8;
