@@ -5,6 +5,10 @@ import ShowMoreButton from "../show-more-button/show-more-button";
 
 import {filmType} from "../../custom-prop-types.js";
 
+import withSmallMovieCardHandling from "../../hocs/with-small-movie-card-handling/with-small-movie-card-handling";
+
+const SmallMovieCardWrapped = withSmallMovieCardHandling(SmallMovieCard);
+
 
 const FilmsList = (props) => {
   const {
@@ -24,7 +28,7 @@ const FilmsList = (props) => {
       <div className="catalog__movies-list">
         {filmsToBeRendered.map((film, i) => {
           return (
-            <SmallMovieCard
+            <SmallMovieCardWrapped
               key={`${i}-film`}
               film={film}
               onMouseOver={onMouseOver}
