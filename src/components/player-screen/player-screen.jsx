@@ -8,8 +8,10 @@ import PlayButton from "../play-button/play-buttton";
 import TimeElapsed from "../time-elapsed/time-elapsed";
 
 import withVideoHandling from "../../hocs/with-video-handling/with-video-handling";
+import withTimeElapsedHandling from "../../hocs/with-time-elapsed-handling/with-time-elapsed-handling";
 
 const FullVideoPlayerWrapped = withVideoHandling(FullVideoPlayer);
+const TimeElapsedWrapped = withTimeElapsedHandling(TimeElapsed);
 
 
 const PlayerScreen = (props) => {
@@ -49,7 +51,7 @@ const PlayerScreen = (props) => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <TimeElapsed
+          <TimeElapsedWrapped
             videoRef={videoRef}
           />
         </div>
