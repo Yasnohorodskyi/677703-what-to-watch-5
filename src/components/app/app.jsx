@@ -10,6 +10,7 @@ import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
 import withAuthHandling from "../../hocs/with-auth-handling/with-auth-handling";
+import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
 
 
 const AuthScreenWrapped = withAuthHandling(AuthScreen);
@@ -56,9 +57,10 @@ const App = (props) => {
         <AddReviewScreen />
       </Route>
       <Route exact path="/player/:id"
-        render={({match}) => (
-          <PlayerScreen
+        render={({match, history}) => (
+          <PlayerScreenWrapped
             match={match}
+            history={history}
           />
         )}
       >
