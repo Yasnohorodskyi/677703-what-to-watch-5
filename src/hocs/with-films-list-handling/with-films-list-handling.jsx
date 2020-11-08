@@ -15,7 +15,6 @@ const withFilmsListHandling = (Component) => {
       };
 
       this._handleMoreButtonClick = this._handleMoreButtonClick.bind(this);
-      // this._handleMouseOver = this._handleMouseOver.bind(this);
     }
 
     componentDidUpdate(prevProps) {

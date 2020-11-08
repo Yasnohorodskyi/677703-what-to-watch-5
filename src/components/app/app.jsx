@@ -14,6 +14,7 @@ import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/wit
 
 
 const AuthScreenWrapped = withAuthHandling(AuthScreen);
+const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
 
 const App = (props) => {
   const {
