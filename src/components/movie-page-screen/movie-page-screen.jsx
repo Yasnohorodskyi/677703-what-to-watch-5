@@ -5,8 +5,21 @@ import {getRatingDesc} from "../../utils.js";
 
 import FilmsList from "../films-list/films-list";
 import Tabs from "../tabs/tabs";
+import {connect} from "react-redux";
 
-const TABS_LABELS = [`Overview`, `Details`, `Reviews`];
+import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
+import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
+
+
+const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
+const TabsWrapped = withTabsHandling(Tabs);
+
+const TabLabels = {
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`
+};
 
 
 const getOverviewContent = (currentFilm) => {
@@ -16,7 +29,6 @@ const getOverviewContent = (currentFilm) => {
     director,
     starring,
   } = currentFilm;
-
   const shortStarring = starring.slice(0, 4).join(`, `);
   return (
     <React.Fragment>
@@ -123,10 +135,10 @@ const getReviewsContent = (reviews) => {
 };
 
 const MoviePageScreen = (props) => {
-  const {films, reviews} = props;
-  const filmID = parseInt(props.match.params.id, 10);
+  const {allFilms, allReviews} = props;
+  const filmId = parseInt(props.match.params.id, 10);
 
-  const currentFilm = films.find((film) => film.id === filmID);
+  const currentFilm = allFilms.find((film) => film.id === filmId);
   const {
     title,
     fullImg,
@@ -135,12 +147,29 @@ const MoviePageScreen = (props) => {
     similarFilmsID,
   } = currentFilm;
 
-  const similarFilms = films.filter(
+  const similarFilms = allFilms.filter(
       (film) => similarFilmsID.some(
           (similarID) => film.id === similarID
       )
   );
-  const currentFilmReviews = reviews.find((review) => review.filmId === filmID);
+  const reviews = allReviews.find((review) => review.filmId === filmId).reviews;
+  const tabs = [
+    {
+      id: TabLabels.OVERVIEW,
+      title: TabLabels.OVERVIEW,
+      render: () => getOverviewContent(currentFilm),
+    },
+    {
+      id: TabLabels.DETAILS,
+      title: TabLabels.DETAILS,
+      render: () => getDetailsContent(currentFilm),
+    },
+    {
+      id: TabLabels.REVIEWS,
+      title: TabLabels.REVIEWS,
+      render: () => getReviewsContent(reviews),
+    },
+  ];
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -201,14 +230,9 @@ const MoviePageScreen = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <Tabs
-              labels={TABS_LABELS}
-
-            >
-              {getOverviewContent(currentFilm)}
-              {getDetailsContent(currentFilm)}
-              {getReviewsContent(currentFilmReviews.reviews)}
-            </Tabs>
+            <TabsWrapped
+              tabs={tabs}
+            />
           </div>
         </div>
       </div>
@@ -218,7 +242,7 @@ const MoviePageScreen = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <FilmsList
+        <FilmsListWrapped
           films={similarFilms.slice(0, 4)}
           history={props.history}
         />
@@ -242,9 +266,8 @@ const MoviePageScreen = (props) => {
 };
 
 MoviePageScreen.propTypes = {
-  // films: PropTypes.arrayOf(filmType).isRequred,
-  films: PropTypes.arrayOf(filmType).isRequired,
-  reviews: PropTypes.arrayOf(reviewType).isRequired,
+  allFilms: PropTypes.arrayOf(filmType).isRequired,
+  allReviews: PropTypes.arrayOf(reviewType).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -253,4 +276,10 @@ MoviePageScreen.propTypes = {
   history: PropTypes.object,
 };
 
-export default MoviePageScreen;
+const mapStateToProps = (state) => ({
+  allFilms: state.allFilms,
+  allReviews: state.allReviews,
+});
+
+export {MoviePageScreen};
+export default connect(mapStateToProps)(MoviePageScreen);

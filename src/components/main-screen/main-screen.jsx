@@ -1,14 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
-import {Link} from "react-router-dom";
-import {ActionCreator} from "../../store/action.js";
 
+import {ActionCreator} from "../../store/action.js";
+import {connect} from "react-redux";
+
+import PromoMovie from "../promo-movie/promo-movie";
 import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
 
-import {connect} from "react-redux";
+import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
+
+const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 const MainScreen = (props) => {
   const {
@@ -46,40 +51,11 @@ const MainScreen = (props) => {
         </div>
       </header>
 
-      <div className="movie-card__wrap">
-        <div className="movie-card__info">
-          <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
-          </div>
-
-          <div className="movie-card__desc">
-            <h2 className="movie-card__title">{movieTitle}</h2>
-            <p className="movie-card__meta">
-              <span className="movie-card__genre">{genre}</span>
-              <span className="movie-card__year">{releaseDate}</span>
-            </p>
-
-            <div className="movie-card__buttons">
-              <Link to="/player/3">
-                <button className="btn btn--play movie-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s">
-                    </use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-              </Link>
-              <Link to="/mylist">
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PromoMovie
+        movieTitle={movieTitle}
+        genre={genre}
+        releaseDate={releaseDate}
+      />
     </section >
 
     <div className="page-content">
@@ -92,7 +68,7 @@ const MainScreen = (props) => {
           onGenreChange={onGenreChange}
         />
 
-        <FilmsList
+        <FilmsListWrapped
           films={genreFilms}
           history={history}
         />

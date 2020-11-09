@@ -1,87 +1,62 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../small-movie-card/small-movie-card";
 import ShowMoreButton from "../show-more-button/show-more-button";
 
 import {filmType} from "../../custom-prop-types.js";
-import {DEFAULT_RENDERED_FILMS_COUNT} from "../../const.js";
 
-class FilmsList extends PureComponent {
-  constructor(props) {
-    super(props);
+import withSmallMovieCardHandling from "../../hocs/with-small-movie-card-handling/with-small-movie-card-handling";
 
-    this.state = {
-      currentFilmID: -1,
-      renderedFilmsCount: DEFAULT_RENDERED_FILMS_COUNT,
-    };
+const SmallMovieCardWrapped = withSmallMovieCardHandling(SmallMovieCard);
 
-    this._handleMoreButtonClick = this._handleMoreButtonClick.bind(this);
-  }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.films !== this.props.films) {
-      this.setState({
-        renderedFilmsCount: DEFAULT_RENDERED_FILMS_COUNT,
-      });
-    }
-  }
+const FilmsList = (props) => {
+  const {
+    films,
+    history,
+    isMoreButtonVisible,
+    onMoreButtonClick,
+    activeItemId,
+    updateActiveItem,
+    renderedFilmsCount,
+  } = props;
 
-  _handleMoreButtonClick() {
-    this.setState((prevState, props) => {
-      const length = props.films.length;
-      const oldCount = prevState.renderedFilmsCount;
-      const newCount = ((oldCount + 8) > (length - 1)) ? length : (oldCount + 8);
+  const filmsToBeRendered = films.slice(0, renderedFilmsCount);
 
-      return ({
-        renderedFilmsCount: newCount,
-      });
-    });
-  }
+  return (
+    <>
+      <div className="catalog__movies-list">
+        {filmsToBeRendered.map((film, i) => {
+          return (
+            <SmallMovieCardWrapped
+              key={`${i}-film`}
+              film={film}
+              onMouseOver={updateActiveItem}
+              onMovieCardClick={() => history.push(`/films/${activeItemId}`)}
+            />
+          );
+        })}
+      </div>
 
-  _getMoreButtonVisibility() {
-    if (this.state.renderedFilmsCount < this.props.films.length) {
-      return true;
-    }
+      {isMoreButtonVisible &&
+        <ShowMoreButton
+          onMoreButtonClick={onMoreButtonClick}
+        />
+      }
 
-    return false;
-  }
+    </>
+  );
 
-  render() {
-    const {films, history} = this.props;
-    const filmsToBeRendered = films.slice(0, this.state.renderedFilmsCount);
-
-    return (
-      <>
-        <div className="catalog__movies-list">
-          {filmsToBeRendered.map((film, i) => {
-            return (
-              <SmallMovieCard
-                key={`${i}-film`}
-                film={film}
-                onMouseOver={(hoverID) => {
-                  this.setState({currentFilmID: hoverID});
-                }}
-                onMovieCardClick={() => history.push(`/films/${this.state.currentFilmID}`)}
-              />
-            );
-          })}
-        </div>
-
-        {this._getMoreButtonVisibility()
-          &&
-          <ShowMoreButton
-            onMoreButtonClick={this._handleMoreButtonClick}
-          />
-        }
-
-      </>
-    );
-  }
-}
+};
 
 FilmsList.propTypes = {
   films: PropTypes.arrayOf(filmType).isRequired,
   history: PropTypes.object.isRequired,
+  isMoreButtonVisible: PropTypes.bool.isRequired,
+  onMoreButtonClick: PropTypes.func.isRequired,
+  activeItemId: PropTypes.number.isRequired,
+  updateActiveItem: PropTypes.func.isRequired,
+  renderedFilmsCount: PropTypes.number.isRequired,
 };
 
 export default FilmsList;

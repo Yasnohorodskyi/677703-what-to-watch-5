@@ -9,6 +9,10 @@ import MoviePageScreen from "../movie-page-screen/movie-page-screen";
 import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
+import withAuthHandling from "../../hocs/with-auth-handling/with-auth-handling";
+
+
+const AuthScreenWrapped = withAuthHandling(AuthScreen);
 
 const App = (props) => {
   const {
@@ -31,12 +35,11 @@ const App = (props) => {
         )}
       />
       <Route exact path="/login">
-        <AuthScreen />
+        <AuthScreenWrapped />
       </Route>
       <Route exact path="/mylist"
         render={({history}) => (
           <MyListScreen
-            onMovieCardClick={(filmID) => history.push(`/films/${filmID}`)}
             history={history}
           />
         )}
@@ -52,8 +55,14 @@ const App = (props) => {
       <Route exact path="/films/:id/review">
         <AddReviewScreen />
       </Route>
-      <Route exact path="/player/:id">
-        <PlayerScreen />
+      <Route exact path="/player/:id"
+        render={({match}) => (
+          <PlayerScreen
+            match={match}
+          />
+        )}
+      >
+
       </Route>
     </Switch>
 

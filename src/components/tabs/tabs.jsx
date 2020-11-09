@@ -1,55 +1,46 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Tab from "../tab/tab.jsx";
+import {tabType} from "../../custom-prop-types.js";
 
 
-class Tabs extends PureComponent {
-  constructor(props) {
-    super(props);
+const Tabs = (props) => {
+  const {
+    tabs,
+    onTabClick
+  } = props;
+  let {activeTabId} = props;
 
-    this.state = {
-      activeTab: this.props.labels[0],
-    };
+  if (!activeTabId) {
+    activeTabId = tabs[0].id;
   }
 
-  render() {
-    const {
-      labels,
-      children,
-    } = this.props;
+  return (
+    <React.Fragment>
+      <nav className="movie-nav movie-card__nav">
+        <ul className="movie-nav__list">
+          {tabs.map((tab, index) => {
+            return (
+              <Tab
+                key={`tab-${index}`}
+                tab={tab}
+                onTabClick={onTabClick}
+                isActive={activeTabId === tab.id}
+              />
+            );
+          })}
+        </ul>
+      </nav>
 
-    const getActiveClass = (label) => this.state.activeTab === label ? `movie-nav__item--active` : ``;
-    return (
-      <React.Fragment>
-        <nav className="movie-nav movie-card__nav">
-          <ul className="movie-nav__list">
-            {labels.map((label, index) => {
-              return (
-                <Tab
-                  key={`tab-${index}`}
-                  label={label}
-                  className={`movie-nav__item ${getActiveClass}`}
-                  onTabClick={(currentLabel) => {
-                    this.setState({activeTab: currentLabel});
-                  }}
-                  activeTab={this.state.activeTab}
-                />
-              );
-            })}
-          </ul>
-        </nav>
-
-        {this.state.activeTab === labels[0] && children[0]}
-        {this.state.activeTab === labels[1] && children[1]}
-        {this.state.activeTab === labels[2] && children[2]}
-      </React.Fragment>
-    );
-  }
-}
+      {tabs.find(({id}) => id === activeTabId).render()}
+    </React.Fragment>
+  );
+};
 
 Tabs.propTypes = {
-  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  tabs: PropTypes.arrayOf(tabType).isRequired,
+  onTabClick: PropTypes.func.isRequired,
+  activeTabId: PropTypes.string,
 };
 
 export default Tabs;

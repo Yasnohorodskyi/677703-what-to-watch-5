@@ -1,70 +1,63 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 
-const PLAYING_TIMEOUT = 1000;
+import withVideoHandling from "../../hocs/with-video-handling/with-video-handling";
 
-class SmallMovieCard extends PureComponent {
-  constructor(props) {
-    super(props);
+const VideoPlayerWrapped = withVideoHandling(VideoPlayer);
 
-    this.state = {
-      videoRef: null,
-      // timer: null,
-    };
-    this._timer = null;
-  }
 
-  render() {
-    const {film, onMouseOver, onMovieCardClick} = this.props;
-    const {
-      title,
-      coverImg,
-      id,
-      video,
-    } = film;
+const SmallMovieCard = (props) => {
 
-    return (
-      <article className="small-movie-card catalog__movies-card"
-        onMouseOver={() => {
-          onMouseOver(id);
-          const timer = setTimeout(() => {
-            this.state.videoRef.play();
-          }, PLAYING_TIMEOUT);
-          this._timer = timer;
-        }}
-        onMouseOut={() => {
-          if (this._timer) {
-            this.state.videoRef.load();
-          }
-          clearTimeout(this._timer);
-        }}
-        onClick={() => {
-          onMovieCardClick(id);
-        }}
-      >
-        <div className="small-movie-card__image">
-          <VideoPlayer
-            src={video}
-            coverImg={coverImg}
-            onVideoMount={(videoRef) => {
-              this.setState({videoRef});
-            }}
-          />
-          {/* <img src={`/img/${coverImg}`} alt={title} width="280" height="175" /> */}
-        </div>
-        <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">{title}</a>
-        </h3>
-      </article >
-    );
-  }
-}
+  const {
+    film,
+    onMouseOver,
+    onMovieCardClick,
+    onVideoMount,
+    startTimer,
+    resetTimer,
+  } = props;
+  const {
+    title,
+    coverImg,
+    id,
+    video,
+  } = film;
+
+  return (
+    <article className="small-movie-card catalog__movies-card"
+      onMouseOver={() => {
+        onMouseOver(id);
+        startTimer();
+      }}
+      onMouseOut={() => {
+        resetTimer();
+      }}
+      onClick={() => {
+        onMovieCardClick(id);
+      }}
+    >
+      <div className="small-movie-card__image">
+        <VideoPlayerWrapped
+          src={video}
+          coverImg={coverImg}
+          onVideoMount={onVideoMount}
+        />
+      </div>
+      <h3 className="small-movie-card__title">
+        <a className="small-movie-card__link" href="movie-page.html">{title}</a>
+      </h3>
+    </article >
+  );
+};
 
 SmallMovieCard.propTypes = {
   onMouseOver: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
+  startTimer: PropTypes.func.isRequired,
+  resetTimer: PropTypes.func.isRequired,
+  onVideoMount: PropTypes.func.isRequired,
   film: filmType
 };
 
