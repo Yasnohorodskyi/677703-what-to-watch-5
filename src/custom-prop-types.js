@@ -3,20 +3,21 @@ import PropTypes from "prop-types";
 export const filmType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  fullImg: PropTypes.string.isRequired,
+  coverImg: PropTypes.string.isRequired,
+  backgroundImage: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  video: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  scoresCount: PropTypes.number.isRequired,
+  starring: PropTypes.arrayOf(PropTypes.string).isRequired,
+  duration: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
-  rating: PropTypes.shape({
-    value: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
-  }),
-  video: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  director: PropTypes.string.isRequired,
-  starring: PropTypes.arrayOf(PropTypes.string).isRequired,
-  coverImg: PropTypes.string.isRequired,
-  fullImg: PropTypes.string.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   similarFilmsID: PropTypes.arrayOf(PropTypes.number).isRequired,
-  duration: PropTypes.string.isRequired,
 }).isRequired;
 
 export const reviewType = PropTypes.shape({
