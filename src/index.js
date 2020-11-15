@@ -5,8 +5,8 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {createAPI} from "./services/api.js";
+import rootReducer from "./store/reducers/root-reducer.js";
 import App from "./components/app/app";
-import {reducer} from "./store/reducer.js";
 import {setGenreFilms, setAllGenres} from "./store/action.js";
 import {fetchFilmsList} from "./store/api-action.js";
 
@@ -19,7 +19,7 @@ const Settings = {
 };
 
 const store = createStore(
-    reducer,
+    rootReducer,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api))
     )

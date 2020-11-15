@@ -1,6 +1,6 @@
-import {extend} from "../utils.js";
-import {ActionType} from "./action.js";
-import allReviews from "../mocks/reviews.js";
+import {extend} from "../../../utils.js";
+import {ActionType} from "../../action.js";
+import allReviews from "../../../mocks/reviews.js";
 
 const adaptFilm = (film) => ({
   id: film[`id`],
@@ -40,15 +40,26 @@ const getGenres = (films) => {
 };
 
 const initialState = {
-  genre: `All genres`,
   allFilms: [],
-  allGenres: [],
   allReviews,
+  allGenres: [],
+  genre: `All genres`,
   genreFilms: [],
 };
 
-const reducer = (state = initialState, action) => {
+const loadData = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_FILMS:
+      const sourceFilms = action.payload;
+      const allFilms = sourceFilms.map((film) => adaptFilm(film));
+
+      return extend(state, {
+        allFilms,
+      });
+    case ActionType.SET_ALL_GENRES:
+      return extend(state, {
+        allGenres: getGenres(state.allFilms),
+      });
     case ActionType.CHANGE_ACTIVE_GENRE:
       return extend(state, {
         genre: action.genre
@@ -64,19 +75,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         genreFilms,
       });
-    case ActionType.LOAD_FILMS:
-      const sourceFilms = action.payload;
-      const allFilms = sourceFilms.map((film) => adaptFilm(film));
-      return extend(state, {
-        allFilms,
-      });
-    case ActionType.SET_ALL_GENRES:
-      return extend(state, {
-        allGenres: getGenres(state.allFilms),
-      });
   }
 
   return state;
 };
 
-export {reducer};
+export {loadData};
