@@ -4,8 +4,6 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app";
 import {reducer} from "./store/reducer.js";
-// import films from "./mocks/films.js";
-// import reviews from "./mocks/reviews.js";
 
 const Settings = {
   MOVIE_TITLE: `The Grand Budapest Hotel`,

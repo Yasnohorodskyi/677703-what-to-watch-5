@@ -1,6 +1,6 @@
 import {extend} from "../utils.js";
 import {ActionType} from "./action.js";
-import allFilms from "../mocks/films.js";
+// import allFilms from "../mocks/films.js";
 import allReviews from "../mocks/reviews.js";
 
 const getGenres = (films) => {
@@ -19,10 +19,10 @@ const allGenres = getGenres(allFilms);
 
 const initialState = {
   genre: `All genres`,
-  allFilms,
-  allGenres,
-  allReviews,
-  genreFilms: allFilms,
+  allFilms: [],
+  allGenres: [],
+  allReviews: [],
+  genreFilms: [],
 };
 
 const reducer = (state = initialState, action) => {
