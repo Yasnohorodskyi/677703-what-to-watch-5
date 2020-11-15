@@ -23,22 +23,6 @@ const adaptFilm = (film) => ({
   similarFilmsID: [3, 7, 9],
 });
 
-const getGenres = (films) => {
-  const genres = [`All genres`];
-
-  if (films.length === 0) {
-    return genres;
-  }
-
-  films.forEach((film) => {
-    if (!genres.includes(film.genre)) {
-      genres.push(film.genre);
-    }
-  });
-
-  return genres;
-};
-
 const initialState = {
   allFilms: [],
   allReviews,
@@ -56,24 +40,9 @@ const loadData = (state = initialState, action) => {
       return extend(state, {
         allFilms,
       });
-    case ActionType.SET_ALL_GENRES:
-      return extend(state, {
-        allGenres: getGenres(state.allFilms),
-      });
     case ActionType.CHANGE_ACTIVE_GENRE:
       return extend(state, {
         genre: action.genre
-      });
-    case ActionType.SET_GENRE_FILMS:
-      if (!state.genre || state.genre === `All genres`) {
-        return extend(state, {
-          genreFilms: state.allFilms,
-        });
-      }
-      const genreFilms = state.allFilms.filter((film) => film.genre === state.genre);
-
-      return extend(state, {
-        genreFilms,
       });
   }
 

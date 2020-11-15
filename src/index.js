@@ -7,7 +7,6 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {createAPI} from "./services/api.js";
 import rootReducer from "./store/reducers/root-reducer.js";
 import App from "./components/app/app";
-import {setGenreFilms, setAllGenres} from "./store/action.js";
 import {fetchFilmsList} from "./store/api-action.js";
 
 const api = createAPI();
@@ -28,8 +27,6 @@ const store = createStore(
 Promise.all([
   store.dispatch(fetchFilmsList())
 ])
-.then(() => store.dispatch(setAllGenres()))
-.then(() => store.dispatch(setGenreFilms()))
 .then(() => {
   ReactDOM.render(
       <Provider store={store}>
