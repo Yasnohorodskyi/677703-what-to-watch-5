@@ -9,6 +9,7 @@ import TimeElapsed from "../time-elapsed/time-elapsed";
 
 import withVideoHandling from "../../hocs/with-video-handling/with-video-handling";
 import withTimeElapsedHandling from "../../hocs/with-time-elapsed-handling/with-time-elapsed-handling";
+import {getAllFilms} from "../../store/selectors/selectors";
 
 const FullVideoPlayerWrapped = withVideoHandling(FullVideoPlayer);
 const TimeElapsedWrapped = withTimeElapsedHandling(TimeElapsed);
@@ -29,7 +30,7 @@ const PlayerScreen = (props) => {
   const currentId = +match.params.id;
   const currentFilm = allFilms.find((film) => film.id === currentId);
   const {
-    coverImg,
+    fullImg,
     video,
   } = currentFilm;
 
@@ -37,7 +38,7 @@ const PlayerScreen = (props) => {
     <div className="player">
       <FullVideoPlayerWrapped
         src={video}
-        coverImg={`${coverImg}`}
+        fullImg={`${fullImg}`}
         onVideoMount={onVideoMount}
       />
 
@@ -96,7 +97,7 @@ PlayerScreen.propTypes = {
 
 
 const mapStateToProps = (state) => ({
-  allFilms: state.allFilms,
+  allFilms: getAllFilms(state),
 });
 
 export {PlayerScreen};

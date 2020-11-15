@@ -18,11 +18,12 @@ const SmallMovieCard = (props) => {
     startTimer,
     resetTimer,
   } = props;
+
   const {
     title,
     coverImg,
     id,
-    video,
+    previewVideoLink,
   } = film;
 
   return (
@@ -40,7 +41,7 @@ const SmallMovieCard = (props) => {
     >
       <div className="small-movie-card__image">
         <VideoPlayerWrapped
-          src={video}
+          src={previewVideoLink}
           coverImg={coverImg}
           onVideoMount={onVideoMount}
         />

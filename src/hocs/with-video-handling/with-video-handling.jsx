@@ -46,7 +46,6 @@ const withVideoHandling = (Component) => {
   WithVideoHandling.propTypes = {
     src: PropTypes.string.isRequired,
     onVideoMount: PropTypes.func.isRequired,
-    coverImg: PropTypes.string.isRequired,
   };
 
   return WithVideoHandling;

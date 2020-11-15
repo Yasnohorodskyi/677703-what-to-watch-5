@@ -12,7 +12,7 @@ const VideoPlayer = (props) => {
     <video
       width="280" height="175"
       ref={videoRef}
-      poster={`/img/${coverImg}`}
+      poster={`${coverImg}`}
       src={`${src}`}
       muted={`muted`}
     >

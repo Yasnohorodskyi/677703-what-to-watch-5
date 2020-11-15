@@ -6,6 +6,7 @@ import {filmType} from "../../custom-prop-types.js";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {getAllFilms} from "../../store/selectors/selectors";
 
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
@@ -65,7 +66,7 @@ MyListScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.allFilms,
+  films: getAllFilms(state),
 });
 
 export {MyListScreen};
