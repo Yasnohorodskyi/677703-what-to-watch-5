@@ -4,6 +4,7 @@ import {filmType} from "../../custom-prop-types";
 import {changeActiveGenre} from "../../store/action.js";
 import {connect} from "react-redux";
 import {getGenreFilms, getAllFilms, getActiveGenre, getAllGenres} from "../../store/selectors/selectors.js";
+import {Link} from "react-router-dom";
 
 import PromoMovie from "../promo-movie/promo-movie";
 import GenresList from "../genres-list/genres-list";
@@ -11,7 +12,18 @@ import FilmsList from "../films-list/films-list";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {AuthorizationStatus} from "../../const";
 
+const getSignInMarkup = (authorizationStatus) => {
+  return (
+    authorizationStatus === AuthorizationStatus.AUTH ?
+      <div className="user-block__avatar">
+        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+      </div>
+      :
+      <Link to={`/login`} className="user-block__link">Sign in</Link>
+  );
+};
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
@@ -25,6 +37,7 @@ const MainScreen = (props) => {
     activeGenre,
     onGenreChange,
     history,
+    authorizationStatus,
   } = props;
 
   return <React.Fragment>
@@ -45,9 +58,7 @@ const MainScreen = (props) => {
         </div>
 
         <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
+          {getSignInMarkup(authorizationStatus)}
         </div>
       </header>
 
@@ -99,7 +110,8 @@ MainScreen.propTypes = {
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
-  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired
+  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -107,6 +119,7 @@ const mapStateToProps = (state) => ({
   allGenres: getAllGenres(state),
   allFilms: getAllFilms(state),
   activeGenre: getActiveGenre(state),
+  authorizationStatus: state.USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
