@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
 
 import MainScreen from "../main-screen/main-screen";
 import AddReviewScreen from "../add-review-screen/add-review-screen";
@@ -11,6 +11,7 @@ import PlayerScreen from "../player-screen/player-screen";
 
 import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
 import PrivateRoute from "../private-route/private-route";
+import browserHistory from "../../browser-history";
 
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
@@ -24,7 +25,7 @@ const App = (props) => {
 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/"
           render={({history}) => (
