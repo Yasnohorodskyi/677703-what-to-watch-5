@@ -10,6 +10,7 @@ import App from "./components/app/app";
 import {checkAuth, fetchFilmsList} from "./store/api-action.js";
 import {requireAuthorization} from "./store/action.js";
 import {AuthorizationStatus} from "./const.js";
+import {redirect} from "./store/middlewares/redirect.js";
 
 
 const api = createAPI(
@@ -25,7 +26,8 @@ const Settings = {
 const store = createStore(
     rootReducer,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
