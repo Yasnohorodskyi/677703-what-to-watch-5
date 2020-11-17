@@ -10,7 +10,7 @@ import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
 import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
-import {PrivateRoute} from "../private-route/private-route";
+import PrivateRoute from "../private-route/private-route";
 
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
