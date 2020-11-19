@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {getAllFilms, getAllReviews} from "../../store/selectors/selectors";
 
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
@@ -27,6 +28,7 @@ const getOverviewContent = (currentFilm) => {
   const {
     description,
     rating,
+    scoresCount,
     director,
     starring,
   } = currentFilm;
@@ -34,10 +36,10 @@ const getOverviewContent = (currentFilm) => {
   return (
     <React.Fragment>
       <div className="movie-rating">
-        <div className="movie-rating__score">{rating.value}</div>
+        <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
-          <span className="movie-rating__level">{getRatingDesc(rating.value)}</span>
-          <span className="movie-rating__count">{rating.count} ratings</span>
+          <span className="movie-rating__level">{getRatingDesc(rating)}</span>
+          <span className="movie-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
 
@@ -282,8 +284,8 @@ MoviePageScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  allFilms: state.allFilms,
-  allReviews: state.allReviews,
+  allFilms: getAllFilms(state),
+  allReviews: getAllReviews(state),
 });
 
 export {MoviePageScreen};

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
-
-import {ActionCreator} from "../../store/action.js";
+import {changeActiveGenre} from "../../store/action.js";
 import {connect} from "react-redux";
+import {getGenreFilms, getAllFilms, getActiveGenre, getAllGenres} from "../../store/selectors/selectors.js";
 
 import PromoMovie from "../promo-movie/promo-movie";
 import GenresList from "../genres-list/genres-list";
@@ -103,16 +103,15 @@ MainScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  genreFilms: state.genreFilms,
-  allGenres: state.allGenres,
-  allFilms: state.allFilms,
-  activeGenre: state.genre,
+  genreFilms: getGenreFilms(state),
+  allGenres: getAllGenres(state),
+  allFilms: getAllFilms(state),
+  activeGenre: getActiveGenre(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreChange(genre) {
-    dispatch(ActionCreator.changeActiveGenre(genre));
-    dispatch(ActionCreator.setGenreFilms(genre));
+    dispatch(changeActiveGenre(genre));
   }
 });
 

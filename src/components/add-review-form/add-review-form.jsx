@@ -9,7 +9,7 @@ const AddReviewForm = (props) => {
   } = props;
 
   const stars = new Array(5).fill(`1`);
-  const getChecked = (index) => (rating === index) ? true : false;
+  const getChecked = (index) => rating === index;
   return (
     <div className="add-review">
       <form action="#" className="add-review__form" onSubmit={handleSubmit}>

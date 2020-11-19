@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const FullVideoPlayer = (props) => {
   const {
-    coverImg,
+    fullImg,
     src,
     videoRef,
   } = props;
@@ -12,7 +12,7 @@ const FullVideoPlayer = (props) => {
     <video
       className={`player__video`}
       ref={videoRef}
-      poster={`/img/${coverImg}`}
+      poster={`${fullImg}`}
       src={`${src}`}
     >
       Please use another web browser with video tag support
@@ -22,7 +22,7 @@ const FullVideoPlayer = (props) => {
 
 FullVideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
-  coverImg: PropTypes.string.isRequired,
+  fullImg: PropTypes.string.isRequired,
   onVideoMount: PropTypes.func.isRequired,
   videoRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
