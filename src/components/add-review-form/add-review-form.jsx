@@ -14,9 +14,9 @@ const AddReviewForm = (props) => {
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleSubmit} onChange={handleRatingChange}>
+      <form action="#" className="add-review__form" onSubmit={handleSubmit} >
         <div className="rating">
-          <div className="rating__stars" >
+          <div className="rating__stars" onChange={handleRatingChange}>
             {stars.map((star, index) =>(
               <React.Fragment key={`star-${index + 1}`}>
                 <input
@@ -26,7 +26,6 @@ const AddReviewForm = (props) => {
                   name="rating"
                   value={index + 1}
                   defaultChecked={getChecked(index + 1)}
-
                 />
                 <label className="rating__label" htmlFor={`star-${index + 1}`}>Rating {`${index + 1}`}</label>
               </React.Fragment>
