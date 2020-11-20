@@ -40,9 +40,13 @@ const loadData = (state = initialState, action) => {
       return extend(state, {
         allFilms,
       });
+    case ActionType.LOAD_FILM:
+      return extend(state, {
+        film: adaptFilm(action.payload)
+      });
     case ActionType.CHANGE_ACTIVE_GENRE:
       return extend(state, {
-        genre: action.genre
+        genre: action.payload
       });
   }
 

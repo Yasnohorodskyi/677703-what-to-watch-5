@@ -1,18 +1,23 @@
 export const ActionType = {
   CHANGE_ACTIVE_GENRE: `CHANGE_ACTIVE_GENRE`,
   LOAD_FILMS: `LOAD_FILMS`,
+  LOAD_FILM: `LOAD_FILM`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
 };
 
 export const changeActiveGenre = (genre) => ({
   type: ActionType.CHANGE_ACTIVE_GENRE,
-  genre,
+  payload: genre,
 });
 
 export const loadFilms = (films) => ({
   type: ActionType.LOAD_FILMS,
   payload: films,
+});
+export const loadFilm = (film) => ({
+  type: ActionType.LOAD_FILM,
+  payload: film,
 });
 
 export const requireAuthorization = (status) => ({

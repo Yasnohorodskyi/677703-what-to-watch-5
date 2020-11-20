@@ -1,10 +1,15 @@
 import {redirectToRoute} from "./action.js";
 import {AuthorizationStatus} from "../const.js";
-import {loadFilms, requireAuthorization} from "./action.js";
+import {loadFilms, loadFilm, requireAuthorization} from "./action.js";
 
 export const fetchFilmsList = () => (dispatch, __getState, api) => (
   api.get(`/films`)
       .then(({data}) => dispatch(loadFilms(data)))
+);
+
+export const fetchFilm = (id) => (dispatch, __getState, api) => (
+  api.get(`/films/${id}`)
+    .then(({data}) => dispatch(loadFilm(data)))
 );
 
 export const checkAuth = () => (dispatch, __getState, api) => (
