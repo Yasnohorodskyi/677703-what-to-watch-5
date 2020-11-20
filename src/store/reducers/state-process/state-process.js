@@ -11,6 +11,10 @@ const stateProcess = (state = initialState, action) => {
       return extend(state, {
         activeItemId: action.payload,
       });
+    case ActionType.POST_COMMENT:
+      return extend(state, {
+        lastPostedComment: action.payload
+      });
   }
 
   return state;
