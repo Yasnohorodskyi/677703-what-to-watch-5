@@ -12,6 +12,9 @@ export const getActiveGenre = (state) => {
   return state[NameSpace.DATA].genre;
 };
 
+export const getAuthorizationStatus = (state) => {
+  return state[NameSpace.USER].authorizationStatus;
+};
 export const getCurrnetFilm = (state) => {
   return state[NameSpace.DATA].film;
 };

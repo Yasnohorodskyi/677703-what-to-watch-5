@@ -11,12 +11,21 @@ import {connect} from "react-redux";
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {getAllFilms, getAllReviews, getCurrnetFilm, getSimilarFilms} from "../../store/selectors/selectors";
+import {getAllFilms, getAllReviews, getAuthorizationStatus, getCurrnetFilm, getSimilarFilms} from "../../store/selectors/selectors";
 import {fetchFilm} from "../../store/api-action";
-
+import {AuthorizationStatus} from "../../const";
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 const TabsWrapped = withTabsHandling(Tabs);
+
+const showReviewButton = (authorizationStatus, filmId) => {
+  return (
+    authorizationStatus === AuthorizationStatus.AUTH ?
+      <Link to={`/films/${filmId}/review`} className="btn movie-card__button">Add review</Link>
+      :
+      ``
+  );
+};
 
 const MoviePageScreen = (props) => {
   const {
@@ -24,6 +33,7 @@ const MoviePageScreen = (props) => {
     currentFilm,
     loadFilmAction,
     similarFilms,
+    authorizationStatus,
   } = props;
   const filmId = parseInt(props.match.params.id, 10);
 
@@ -94,7 +104,7 @@ const MoviePageScreen = (props) => {
                   <span>My list</span>
                 </button>
               </Link>
-              <Link to={`/films/${filmId}/review`} className="btn movie-card__button">Add review</Link>
+              {showReviewButton(authorizationStatus, filmId)}
             </div>
           </div>
         </div>
@@ -154,6 +164,7 @@ MoviePageScreen.propTypes = {
   currentFilm: PropTypes.shape(filmType),
   similarFilms: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
   loadFilmAction: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -161,12 +172,13 @@ const mapStateToProps = (state) => ({
   allReviews: getAllReviews(state),
   currentFilm: getCurrnetFilm(state),
   similarFilms: getSimilarFilms(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadFilmAction(id) {
     dispatch(fetchFilm(id));
-  }
+  },
 });
 
 export {MoviePageScreen};
