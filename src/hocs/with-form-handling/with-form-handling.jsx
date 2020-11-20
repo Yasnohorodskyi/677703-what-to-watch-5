@@ -1,4 +1,8 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import {addReview} from "../../store/api-action.js";
+import {getActiveItemId} from "../../store/selectors/selectors.js";
 
 const withFormHandling = (Component) => {
   class WithFormHandling extends PureComponent {
@@ -17,6 +21,13 @@ const withFormHandling = (Component) => {
 
     handleSubmit(evt) {
       evt.preventDefault();
+
+      const {
+        postCommentAction,
+        activeItemId
+      } = this.props;
+
+      postCommentAction(activeItemId, this.state.rating, this.state.reviewText);
     }
 
     handleRatingChange(evt) {
@@ -42,8 +53,22 @@ const withFormHandling = (Component) => {
     }
   }
 
-  return WithFormHandling;
-};
+  WithFormHandling.propTypes = {
+    postCommentAction: PropTypes.func.isRequired,
+    activeItemId: PropTypes.number.isRequired,
+  };
 
+  const mapStateToProps = (state) => ({
+    activeItemId: getActiveItemId(state),
+  });
+
+  const mapDispatchToProps = (dispatch) => ({
+    postCommentAction(filmId, rating, comment) {
+      dispatch(addReview(filmId, rating, comment));
+    }
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(WithFormHandling);
+};
 
 export default withFormHandling;
