@@ -11,150 +11,35 @@ import {connect} from "react-redux";
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {getAllFilms, getAllReviews} from "../../store/selectors/selectors";
+import {getAllFilms, getAllReviews, getCurrnetFilm, getSimilarFilms} from "../../store/selectors/selectors";
+import {fetchFilm} from "../../store/api-action";
 
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 const TabsWrapped = withTabsHandling(Tabs);
 
-const TabLabels = {
-  OVERVIEW: `Overview`,
-  DETAILS: `Details`,
-  REVIEWS: `Reviews`
-};
-
-
-const getOverviewContent = (currentFilm) => {
-  const {
-    description,
-    rating,
-    scoresCount,
-    director,
-    starring,
-  } = currentFilm;
-  const shortStarring = starring.slice(0, 4).join(`, `);
-  return (
-    <React.Fragment>
-      <div className="movie-rating">
-        <div className="movie-rating__score">{rating}</div>
-        <p className="movie-rating__meta">
-          <span className="movie-rating__level">{getRatingDesc(rating)}</span>
-          <span className="movie-rating__count">{scoresCount} ratings</span>
-        </p>
-      </div>
-
-      <div className="movie-card__text">
-        <p>{description}</p>
-
-        <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-        <p className="movie-card__starring"><strong>Starring: {shortStarring} and other</strong></p>
-      </div>
-    </React.Fragment>
-  );
-};
-
-const getDetailsContent = (currentFilm) => {
-  const {
-    duration,
-    releaseDate,
-    director,
-    starring,
-    genre
-  } = currentFilm;
-
-  return (
-    <div className="movie-card__text movie-card__row">
-      <div className="movie-card__text-col">
-        <p className="movie-card__details-item">
-          <strong className="movie-card__details-name">Director</strong>
-          <span className="movie-card__details-value">{director}</span>
-        </p>
-        <p className="movie-card__details-item">
-          <strong className="movie-card__details-name">Starring</strong>
-          <span className="movie-card__details-value">
-            {starring.slice(0, -1).map((star) =>
-              <React.Fragment key={star}>
-                {`${star}, `} <br />
-              </React.Fragment>
-            )}
-            {starring.slice(-1)}
-          </span>
-        </p>
-      </div>
-
-      <div className="movie-card__text-col">
-        <p className="movie-card__details-item">
-          <strong className="movie-card__details-name">Run Time</strong>
-          <span className="movie-card__details-value">{duration}</span>
-        </p>
-        <p className="movie-card__details-item">
-          <strong className="movie-card__details-name">Genre</strong>
-          <span className="movie-card__details-value">{genre}</span>
-        </p>
-        <p className="movie-card__details-item">
-          <strong className="movie-card__details-name">Released</strong>
-          <span className="movie-card__details-value">{releaseDate}</span>
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const getReviewContent = (review, index) => {
-  const {
-    text,
-    author,
-    dateTime,
-    rating,
-  } = review;
-
-  return (
-    <div className="review" key={`review-${index}`}>
-      <blockquote className="review__quote">
-        <p className="review__text">{text}</p>
-
-        <footer className="review__details">
-          <cite className="review__author">{author}</cite>
-          <time className="review__date" dateTime="2016-12-24">{dateTime}</time>
-        </footer>
-      </blockquote>
-
-      <div className="review__rating">{rating}</div>
-    </div>
-  );
-};
-const getReviewsContent = (reviews) => {
-  return (
-    <div className="movie-card__reviews movie-card__row">
-      <div className="movie-card__reviews-col">
-        {reviews.slice(0, 3).map((review, index) => getReviewContent(review, index))}
-      </div>
-      <div className="movie-card__reviews-col">
-        {reviews.slice(3, 6).map((review, index) => getReviewContent(review, index))}
-      </div>
-    </div>
-  );
-};
-
 const MoviePageScreen = (props) => {
-  const {allFilms, allReviews} = props;
+  const {
+    allReviews,
+    currentFilm,
+    loadFilmAction,
+    similarFilms,
+  } = props;
   const filmId = parseInt(props.match.params.id, 10);
 
-  const currentFilm = allFilms.find((film) => film.id === filmId);
+  if (!currentFilm) {
+    loadFilmAction(filmId);
+    return null;
+  }
+
   const {
     title,
     fullImg,
     genre,
     releaseDate,
-    similarFilmsID,
   } = currentFilm;
 
-  const similarFilms = allFilms.filter(
-      (film) => similarFilmsID.some(
-          (similarID) => film.id === similarID
-      )
-  );
+
   const reviews = allReviews.find((review) => review.filmId === filmId).reviews;
 
   const tabs = getTabsContent(currentFilm, reviews);
@@ -266,12 +151,23 @@ MoviePageScreen.propTypes = {
     }).isRequired,
   }).isRequired,
   history: PropTypes.object,
+  currentFilm: PropTypes.shape(filmType),
+  similarFilms: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
+  loadFilmAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   allFilms: getAllFilms(state),
   allReviews: getAllReviews(state),
+  currentFilm: getCurrnetFilm(state),
+  similarFilms: getSimilarFilms(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFilmAction(id) {
+    dispatch(fetchFilm(id));
+  }
 });
 
 export {MoviePageScreen};
-export default connect(mapStateToProps)(MoviePageScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePageScreen);
