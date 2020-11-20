@@ -1,4 +1,7 @@
 import React, {PureComponent} from "react";
+import {setActiveItemId} from "../../store/action.js";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 const withActiveItem = (Component) => {
   class WithActiveItem extends PureComponent {
@@ -14,6 +17,7 @@ const withActiveItem = (Component) => {
 
     _updateActiveItem(id) {
       this.setState({activeItemId: id});
+      this.props.setActiveItemIdAction(id);
     }
 
     render() {
@@ -27,7 +31,17 @@ const withActiveItem = (Component) => {
     }
   }
 
-  return WithActiveItem;
+  WithActiveItem.propTypes = {
+    setActiveItemIdAction: PropTypes.func.isRequired,
+  };
+
+  const mapDispatchToProps = (dispatch) => ({
+    setActiveItemIdAction(id) {
+      dispatch(setActiveItemId(id));
+    }
+  });
+
+  return connect(null, mapDispatchToProps)(WithActiveItem);
 };
 
 

@@ -8,6 +8,10 @@ export const getAllReviews = (state) => {
   return state[NameSpace.DATA].allReviews;
 };
 
+export const getActiveItemId = (state) => {
+  return state[NameSpace.STATE].activeItemId;
+};
+
 export const getActiveGenre = (state) => {
   return state[NameSpace.DATA].genre;
 };

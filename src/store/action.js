@@ -4,8 +4,13 @@ export const ActionType = {
   LOAD_FILM: `LOAD_FILM`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
+  SET_ACTIVE_ITEM_ID: `SET_ACTIVE_ITEM_ID`,
 };
 
+export const setActiveItemId = (id) => ({
+  type: ActionType.SET_ACTIVE_ITEM_ID,
+  payload: id,
+});
 export const changeActiveGenre = (genre) => ({
   type: ActionType.CHANGE_ACTIVE_GENRE,
   payload: genre,

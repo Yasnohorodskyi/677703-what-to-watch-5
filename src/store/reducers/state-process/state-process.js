@@ -1,14 +1,18 @@
-// import {extend} from "../../../utils.js";
-// import {ActionType} from "../../action.js";
-
-//  Этот редьюсер пока заглушка. Так как в приложение нет стейтов компонентов,
-// вынесенных в редакс-хранилище
-// здесь далее будут располагаться редьюсеры связанные со стейтом компонентов
+import {extend} from "../../../utils.js";
+import {ActionType} from "../../action.js";
 
 const initialState = {
+  activeItemId: -1,
 };
 
-const stateProcess = (state = initialState) => {
+const stateProcess = (state = initialState, action) => {
+  switch (action.type) {
+    case ActionType.SET_ACTIVE_ITEM_ID:
+      return extend(state, {
+        activeItemId: action.payload,
+      });
+  }
+
   return state;
 };
 
