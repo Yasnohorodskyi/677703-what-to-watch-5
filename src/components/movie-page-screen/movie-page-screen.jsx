@@ -94,7 +94,7 @@ const MoviePageScreen = (props) => {
                   <span>My list</span>
                 </button>
               </Link>
-              <a href="add-review.html" className="btn movie-card__button">Add review</a>
+              <Link to={`/films/${filmId}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>
