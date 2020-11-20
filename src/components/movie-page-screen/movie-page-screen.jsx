@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {filmType, reviewType} from "../../custom-prop-types";
-import {getRatingDesc} from "../../utils.js";
+import {getTabsContent} from "./tabs-content";
 
 import FilmsList from "../films-list/films-list";
 import Tabs from "../tabs/tabs";
@@ -156,23 +156,8 @@ const MoviePageScreen = (props) => {
       )
   );
   const reviews = allReviews.find((review) => review.filmId === filmId).reviews;
-  const tabs = [
-    {
-      id: TabLabels.OVERVIEW,
-      title: TabLabels.OVERVIEW,
-      render: () => getOverviewContent(currentFilm),
-    },
-    {
-      id: TabLabels.DETAILS,
-      title: TabLabels.DETAILS,
-      render: () => getDetailsContent(currentFilm),
-    },
-    {
-      id: TabLabels.REVIEWS,
-      title: TabLabels.REVIEWS,
-      render: () => getReviewsContent(reviews),
-    },
-  ];
+
+  const tabs = getTabsContent(currentFilm, reviews);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
