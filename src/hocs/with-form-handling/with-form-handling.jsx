@@ -11,11 +11,16 @@ const withFormHandling = (Component) => {
       };
 
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleRatingChange = this.handleRatingChange.bind(this);
       this.handleReviewChange = this.handleReviewChange.bind(this);
     }
 
     handleSubmit(evt) {
       evt.preventDefault();
+    }
+
+    handleRatingChange(evt) {
+      this.setState({rating: +evt.target.value});
     }
 
     handleReviewChange(evt) {
@@ -30,6 +35,7 @@ const withFormHandling = (Component) => {
           {...this.props}
           handleSubmit={this.handleSubmit}
           handleTextChange={this.handleReviewChange}
+          handleRatingChange={this.handleRatingChange}
           rating={this.state.rating}
         />
       );
