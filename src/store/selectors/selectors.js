@@ -12,6 +12,21 @@ export const getActiveGenre = (state) => {
   return state[NameSpace.DATA].genre;
 };
 
+export const getCurrnetFilm = (state) => {
+  return state[NameSpace.DATA].film;
+};
+
+export const getSimilarFilms = createSelector(
+    getAllFilms,
+    getCurrnetFilm,
+    (allfilms, currentFilm) => {
+      if (!currentFilm) {
+        return [];
+      }
+      return allfilms.filter((film) => film.genre === currentFilm.genre);
+    }
+);
+
 export const getAllGenres = createSelector(
     getAllFilms,
     (allFilms) => {
