@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should Tabs render correctly 1`] = `
+<nav
+  className="movie-nav movie-card__nav"
+>
+  <ul
+    className="movie-nav__list"
+  >
+    Tab
+    Tab
+    Tab
+  </ul>
+</nav>
+`;

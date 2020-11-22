@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should FullVideoPlayer render correctly 1`] = `
+<video
+  className="player__video"
+  poster=""
+  src=""
+>
+  Please use another web browser with video tag support
+</video>
+`;

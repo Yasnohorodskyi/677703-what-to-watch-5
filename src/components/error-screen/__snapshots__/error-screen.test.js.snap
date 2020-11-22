@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should ErrorScreen render correctly 1`] = `
+<section
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "red",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "auto",
+      "justifyContent": "center",
+      "left": "0",
+      "paddingBottom": "30px",
+      "position": "fixed",
+      "right": "0",
+      "top": "0",
+      "zIndex": "10",
+    }
+  }
+>
+  <h1>
+    Error
+  </h1>
+  <h2>
+    Well poo. Sadly, the website had a bad day.
+  </h2>
+  <p
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  />
+  <p
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  />
+  <button
+    onClick={[Function]}
+  >
+    RESET ERROR
+  </button>
+</section>
+`;

@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should MoviePageScreen render correctly 1`] = `
+Array [
+  <section
+    className="movie-card movie-card--full"
+  >
+    <div
+      className="movie-card__hero"
+    >
+      <div
+        className="movie-card__bg"
+      >
+        <img
+          alt="The Grand Budapest Hotel"
+          src="img/the-grand-budapest-hotel-poster.jpg"
+        />
+      </div>
+      <h1
+        className="visually-hidden"
+      >
+        WTW
+      </h1>
+      <header
+        className="page-header movie-card__head"
+      >
+        <div
+          className="logo"
+        >
+          <a
+            className="logo__link"
+            href="/"
+            onClick={[Function]}
+          >
+            <span
+              className="logo__letter logo__letter--1"
+            >
+              W
+            </span>
+            <span
+              className="logo__letter logo__letter--2"
+            >
+              T
+            </span>
+            <span
+              className="logo__letter logo__letter--3"
+            >
+              W
+            </span>
+          </a>
+        </div>
+        ProfileSignButton
+      </header>
+      <div
+        className="movie-card__wrap"
+      >
+        <div
+          className="movie-card__desc"
+        >
+          <h2
+            className="movie-card__title"
+          >
+            The Grand Budapest Hotel
+          </h2>
+          <p
+            className="movie-card__meta"
+          >
+            <span
+              className="movie-card__genre"
+            >
+              Comedy
+            </span>
+            <span
+              className="movie-card__year"
+            >
+              2014
+            </span>
+          </p>
+          <div
+            className="movie-card__buttons"
+          >
+            <a
+              href="/player/1"
+              onClick={[Function]}
+            >
+              <button
+                className="btn btn--play movie-card__button"
+                type="button"
+              >
+                <svg
+                  height="19"
+                  viewBox="0 0 19 19"
+                  width="19"
+                >
+                  <use
+                    xlinkHref="#play-s"
+                  />
+                </svg>
+                <span>
+                  Play
+                </span>
+              </button>
+            </a>
+            AddToMylistButton
+            <a
+              className="btn movie-card__button"
+              href="/films/1/review"
+              onClick={[Function]}
+            >
+              Add review
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="movie-card__wrap movie-card__translate-top"
+    >
+      <div
+        className="movie-card__info"
+      >
+        <div
+          className="movie-card__poster movie-card__poster--big"
+        >
+          <img
+            alt="The Grand Budapest Hotel poster"
+            height="327"
+            src="img/the-grand-budapest-hotel-poster.jpg"
+            width="218"
+          />
+        </div>
+        <div
+          className="movie-card__desc"
+        >
+          <withTabsHandling
+            tabs={
+              Array [
+                Object {
+                  "id": "Overview",
+                  "render": [Function],
+                  "title": "Overview",
+                },
+                Object {
+                  "id": "Details",
+                  "render": [Function],
+                  "title": "Details",
+                },
+                Object {
+                  "id": "Reviews",
+                  "render": [Function],
+                  "title": "Reviews",
+                },
+              ]
+            }
+          />
+        </div>
+      </div>
+    </div>
+  </section>,
+  <div
+    className="page-content"
+  >
+    <section
+      className="catalog catalog--like-this"
+    >
+      <h2
+        className="catalog__title"
+      >
+        More like this
+      </h2>
+      <withFilmsListHandling
+        films={
+          Array [
+            Object {
+              "backgroundColor": "#ffffff",
+              "backgroundImage": "img/the-grand-budapest-hotel-bg.jpg",
+              "coverImg": "img/the-grand-budapest-hotel.jpg",
+              "description": "In the 1930s, the Grand Budapest Hotel is a popular       European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
+              "duration": 99,
+              "fullImg": "img/the-grand-budapest-hotel-poster.jpg",
+              "genre": "Comedy",
+              "id": 1,
+              "isFavorite": false,
+              "previewVideoLink": "https://some-link",
+              "rating": 8.9,
+              "releaseDate": 2014,
+              "scoresCount": 240,
+              "starring": Array [
+                "Bill Murray",
+                "Edward Norton",
+                "Jude Law",
+                "Willem Dafoe",
+                "Saoirse Ronan",
+              ],
+              "title": "The Grand Budapest Hotel",
+              "video": "https://some-link",
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+              "backgroundImage": "img/the-grand-budapest-hotel-bg.jpg",
+              "coverImg": "img/the-grand-budapest-hotel.jpg",
+              "description": "In the 1930s, the Grand Budapest Hotel is a popular       European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
+              "duration": 99,
+              "fullImg": "img/the-grand-budapest-hotel-poster.jpg",
+              "genre": "Comedy",
+              "id": 1,
+              "isFavorite": false,
+              "previewVideoLink": "https://some-link",
+              "rating": 8.9,
+              "releaseDate": 2014,
+              "scoresCount": 240,
+              "starring": Array [
+                "Bill Murray",
+                "Edward Norton",
+                "Jude Law",
+                "Willem Dafoe",
+                "Saoirse Ronan",
+              ],
+              "title": "The Grand Budapest Hotel",
+              "video": "https://some-link",
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+              "backgroundImage": "img/the-grand-budapest-hotel-bg.jpg",
+              "coverImg": "img/the-grand-budapest-hotel.jpg",
+              "description": "In the 1930s, the Grand Budapest Hotel is a popular       European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
+              "duration": 99,
+              "fullImg": "img/the-grand-budapest-hotel-poster.jpg",
+              "genre": "Comedy",
+              "id": 1,
+              "isFavorite": false,
+              "previewVideoLink": "https://some-link",
+              "rating": 8.9,
+              "releaseDate": 2014,
+              "scoresCount": 240,
+              "starring": Array [
+                "Bill Murray",
+                "Edward Norton",
+                "Jude Law",
+                "Willem Dafoe",
+                "Saoirse Ronan",
+              ],
+              "title": "The Grand Budapest Hotel",
+              "video": "https://some-link",
+            },
+          ]
+        }
+        history={Object {}}
+      />
+    </section>
+    <footer
+      className="page-footer"
+    >
+      <div
+        className="logo"
+      >
+        <a
+          className="logo__link logo__link--light"
+          href="/"
+          onClick={[Function]}
+        >
+          <span
+            className="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            className="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            className="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <div
+        className="copyright"
+      >
+        <p>
+          © 2019 What to watch Ltd.
+        </p>
+      </div>
+    </footer>
+  </div>,
+]
+`;
