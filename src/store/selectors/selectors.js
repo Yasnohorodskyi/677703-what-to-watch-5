@@ -14,8 +14,8 @@ export const getPromo = (state) => {
 export const getAllFilms = (state) => {
   return state[NameSpace.DATA].allFilms;
 };
-export const getAllReviews = (state) => {
-  return state[NameSpace.DATA].allReviews;
+export const getFilmReviews = (state) => {
+  return state[NameSpace.DATA].filmReviews;
 };
 
 export const getActiveItemId = (state) => {

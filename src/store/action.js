@@ -4,10 +4,12 @@ export const ActionType = {
   LOAD_FILM: `LOAD_FILM`,
   LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
+  LOAD_COMMENTS: `LOAD_COMMENTS`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SET_ACTIVE_ITEM_ID: `SET_ACTIVE_ITEM_ID`,
   SET_REQUEST_ERROR: `SET_REQUEST_ERROR`,
+  RESET_FILM: `RESET_FILM`,
 };
 
 export const setActiveItemId = (id) => ({
@@ -33,6 +35,11 @@ export const loadPromo = (film) => ({
   payload: film,
 });
 
+export const loadComments = (comments) => ({
+  type: ActionType.LOAD_COMMENTS,
+  payload: comments,
+});
+
 export const postComment = (comment) => ({
   type: ActionType.POST_COMMENT,
   payload: comment
@@ -51,4 +58,8 @@ export const redirectToRoute = (url) => ({
 export const setRequestError = (error) => ({
   type: ActionType.SET_REQUEST_ERROR,
   payload: error,
+});
+
+export const resetFilm = () => ({
+  type: ActionType.RESET_FILM,
 });

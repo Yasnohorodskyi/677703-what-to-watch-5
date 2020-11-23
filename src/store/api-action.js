@@ -1,6 +1,6 @@
 import {postComment, redirectToRoute, setRequestError} from "./action.js";
 import {APIRoute, AppRoute, AuthorizationStatus} from "../const.js";
-import {loadFilms, loadFilm, requireAuthorization, loadPromo} from "./action.js";
+import {loadFilms, loadFilm, requireAuthorization, loadPromo, loadComments} from "./action.js";
 
 const handleError = (dispatch, error) => {
   dispatch(setRequestError(error));
@@ -26,6 +26,14 @@ export const fetchFilm = (id) => (dispatch, __getState, api) => (
 export const fetchPromo = () => (dispatch, __getState, api) => (
   api.get(APIRoute.PROMO)
     .then(({data}) => dispatch(loadPromo(data)))
+    .catch((error) => {
+      handleError(dispatch, error);
+    })
+);
+
+export const fetchFilmReviews = (id) => (dispatch, __getState, api) => (
+  api.get(`/comments/${id}`)
+    .then(({data}) => dispatch(loadComments(data)))
     .catch((error) => {
       handleError(dispatch, error);
     })

@@ -11,9 +11,9 @@ import {connect} from "react-redux";
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {getAllFilms, getAllReviews, getAuthorizationStatus, getCurrnetFilm, getSimilarFilms} from "../../store/selectors/selectors";
-import {fetchFilm} from "../../store/api-action";
-import {AuthorizationStatus} from "../../const";
+import {getAllFilms, getFilmReviews, getAuthorizationStatus, getCurrnetFilm, getSimilarFilms} from "../../store/selectors/selectors";
+import {fetchFilm, fetchFilmReviews} from "../../store/api-action";
+import {AppRoute, AuthorizationStatus} from "../../const";
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 const TabsWrapped = withTabsHandling(Tabs);
@@ -29,9 +29,10 @@ const showReviewButton = (authorizationStatus, filmId) => {
 
 const MoviePageScreen = (props) => {
   const {
-    allReviews,
+    filmReviews,
     currentFilm,
     loadFilmAction,
+    loadFilmReviews,
     similarFilms,
     authorizationStatus,
   } = props;
@@ -42,6 +43,11 @@ const MoviePageScreen = (props) => {
     return null;
   }
 
+  if (!filmReviews || filmReviews.length === 0) {
+    loadFilmReviews(filmId);
+    return null;
+  }
+
   const {
     title,
     fullImg,
@@ -49,10 +55,7 @@ const MoviePageScreen = (props) => {
     releaseDate,
   } = currentFilm;
 
-
-  const reviews = allReviews.find((review) => review.filmId === filmId).reviews;
-
-  const tabs = getTabsContent(currentFilm, reviews);
+  const tabs = getTabsContent(currentFilm, filmReviews);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -137,11 +140,11 @@ const MoviePageScreen = (props) => {
 
       <footer className="page-footer">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
         <div className="copyright">
@@ -154,7 +157,7 @@ const MoviePageScreen = (props) => {
 
 MoviePageScreen.propTypes = {
   allFilms: PropTypes.arrayOf(filmType).isRequired,
-  allReviews: PropTypes.arrayOf(reviewType).isRequired,
+  filmReviews: PropTypes.arrayOf(reviewType),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -164,12 +167,13 @@ MoviePageScreen.propTypes = {
   currentFilm: PropTypes.shape(filmType),
   similarFilms: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
   loadFilmAction: PropTypes.func.isRequired,
+  loadFilmReviews: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   allFilms: getAllFilms(state),
-  allReviews: getAllReviews(state),
+  filmReviews: getFilmReviews(state),
   currentFilm: getCurrnetFilm(state),
   similarFilms: getSimilarFilms(state),
   authorizationStatus: getAuthorizationStatus(state),
@@ -179,6 +183,9 @@ const mapDispatchToProps = (dispatch) => ({
   loadFilmAction(id) {
     dispatch(fetchFilm(id));
   },
+  loadFilmReviews(id) {
+    dispatch(fetchFilmReviews(id));
+  }
 });
 
 export {MoviePageScreen};

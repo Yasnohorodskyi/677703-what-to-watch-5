@@ -1,5 +1,5 @@
 import React from "react";
-import {getRatingDesc} from "../../utils.js";
+import {getRatingDesc, getReviewDate} from "../../utils.js";
 
 const TabLabels = {
   OVERVIEW: `Overview`,
@@ -87,11 +87,13 @@ const getDetailsContent = (currentFilm) => {
 
 const getReviewContent = (review, index) => {
   const {
-    text,
-    author,
-    dateTime,
+    userName,
     rating,
+    text,
+    date,
   } = review;
+
+  const reviewDate = getReviewDate(date);
 
   return (
     <div className="review" key={`review-${index}`}>
@@ -99,8 +101,8 @@ const getReviewContent = (review, index) => {
         <p className="review__text">{text}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{author}</cite>
-          <time className="review__date" dateTime="2016-12-24">{dateTime}</time>
+          <cite className="review__author">{userName}</cite>
+          <time className="review__date" dateTime={reviewDate.forRobot}>{reviewDate.forHuman}</time>
         </footer>
       </blockquote>
 

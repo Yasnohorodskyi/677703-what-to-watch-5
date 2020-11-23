@@ -1,6 +1,5 @@
 import {extend} from "../../../utils.js";
 import {ActionType} from "../../action.js";
-import allReviews from "../../../mocks/reviews.js";
 
 const adaptFilm = (film) => ({
   id: film[`id`],
@@ -23,12 +22,22 @@ const adaptFilm = (film) => ({
   similarFilmsID: [3, 7, 9],
 });
 
+const adaptComment = (comment) => ({
+  id: comment.id,
+  userID: comment.user.id,
+  userName: comment.user.name,
+  rating: comment.rating,
+  text: comment.comment,
+  date: comment.date,
+});
+
 const initialState = {
   allFilms: [],
-  allReviews,
+  filmReviews: [],
   allGenres: [],
   genre: `All genres`,
   genreFilms: [],
+  films: null,
 };
 
 const loadData = (state = initialState, action) => {
@@ -51,6 +60,17 @@ const loadData = (state = initialState, action) => {
     case ActionType.CHANGE_ACTIVE_GENRE:
       return extend(state, {
         genre: action.payload
+      });
+    case ActionType.LOAD_COMMENTS:
+      const sourceComments = action.payload;
+      const reviews = sourceComments.map((comment) => adaptComment(comment));
+      return extend(state, {
+        filmReviews: reviews,
+      });
+    case ActionType.RESET_FILM:
+      return extend(state, {
+        film: null,
+        filmReviews: [],
       });
   }
 

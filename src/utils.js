@@ -20,3 +20,15 @@ export const getRatingDesc = (rating) => {
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
+
+export const getReviewDate = (dateString) => {
+  const date = new Date(dateString);
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
+  const day = date.getDay();
+
+  return {
+    forHuman: `${month} ${day}, ${year}`,
+    forRobot: `${year}-${date.getMonth() + 1}-${day}`,
+  };
+};
