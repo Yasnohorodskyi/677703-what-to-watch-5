@@ -15,6 +15,10 @@ const stateProcess = (state = initialState, action) => {
       return extend(state, {
         lastPostedComment: action.payload
       });
+    case ActionType.SET_REQUEST_ERROR:
+      return extend(state, {
+        requestError: action.payload
+      });
   }
 
   return state;

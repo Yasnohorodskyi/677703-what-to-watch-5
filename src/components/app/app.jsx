@@ -12,6 +12,7 @@ import PlayerScreen from "../player-screen/player-screen";
 import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
 import PrivateRoute from "../private-route/private-route";
 import browserHistory from "../../browser-history";
+import {AppRoute} from "../../const";
 
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
@@ -27,7 +28,7 @@ const App = (props) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/"
+        <Route exact path={AppRoute.ROOT}
           render={({history}) => (
             <MainScreen
               movieTitle={movieTitle}
@@ -37,7 +38,7 @@ const App = (props) => {
             />
           )}
         />
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <AuthScreen />
         </Route>
         <PrivateRoute
@@ -70,7 +71,6 @@ const App = (props) => {
             />
           )}
         >
-
         </Route>
       </Switch>
     </BrowserRouter>

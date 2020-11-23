@@ -6,6 +6,7 @@ export const ActionType = {
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SET_ACTIVE_ITEM_ID: `SET_ACTIVE_ITEM_ID`,
+  SET_REQUEST_ERROR: `SET_REQUEST_ERROR`,
 };
 
 export const setActiveItemId = (id) => ({
@@ -39,4 +40,9 @@ export const requireAuthorization = (status) => ({
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
+});
+
+export const setRequestError = (error) => ({
+  type: ActionType.SET_REQUEST_ERROR,
+  payload: error,
 });

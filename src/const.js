@@ -20,9 +20,11 @@ export const AppRoute = {
   MYLIST: `/mylist`,
   FILMS_ID: `/films/:id`,
   PLAYER_ID: `/player/:id`,
+  ERROR: `/error`,
 };
 
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
 };

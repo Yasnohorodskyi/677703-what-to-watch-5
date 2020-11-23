@@ -1,6 +1,10 @@
 import {createSelector} from "reselect";
 import {NameSpace} from "../reducers/root-reducer";
 
+export const getRequestError = (state) => {
+  return state[NameSpace.STATE].requestError;
+};
+
 export const getAllFilms = (state) => {
   return state[NameSpace.DATA].allFilms;
 };
