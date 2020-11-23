@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
 import {changeActiveGenre} from "../../store/action.js";
 import {connect} from "react-redux";
-import {getGenreFilms, getAllFilms, getActiveGenre, getAllGenres} from "../../store/selectors/selectors.js";
+import {
+  getGenreFilms, getAllFilms, getActiveGenre,
+  getAllGenres, getPromo, getAuthorizationStatus
+} from "../../store/selectors/selectors.js";
 import {Link} from "react-router-dom";
 
 import PromoMovie from "../promo-movie/promo-movie";
@@ -32,9 +35,7 @@ const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 const MainScreen = (props) => {
   const {
-    movieTitle,
-    genre,
-    releaseDate,
+    promo,
     allGenres,
     genreFilms,
     activeGenre,
@@ -66,9 +67,11 @@ const MainScreen = (props) => {
       </header>
 
       <PromoMovie
-        movieTitle={movieTitle}
-        genre={genre}
-        releaseDate={releaseDate}
+        movieTitle={promo.title}
+        genre={promo.genre}
+        releaseDate={promo.releaseDate}
+        coverImg={promo.coverImg}
+        filmId={promo.id}
       />
     </section >
 
@@ -106,9 +109,7 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  movieTitle: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
+  promo: PropTypes.shape(filmType).isRequired,
   history: PropTypes.object.isRequired,
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
@@ -118,11 +119,12 @@ MainScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  promo: getPromo(state),
   genreFilms: getGenreFilms(state),
   allGenres: getAllGenres(state),
   allFilms: getAllFilms(state),
   activeGenre: getActiveGenre(state),
-  authorizationStatus: state.USER.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

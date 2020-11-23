@@ -2,6 +2,7 @@ export const ActionType = {
   CHANGE_ACTIVE_GENRE: `CHANGE_ACTIVE_GENRE`,
   LOAD_FILMS: `LOAD_FILMS`,
   LOAD_FILM: `LOAD_FILM`,
+  LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
@@ -24,6 +25,11 @@ export const loadFilms = (films) => ({
 });
 export const loadFilm = (film) => ({
   type: ActionType.LOAD_FILM,
+  payload: film,
+});
+
+export const loadPromo = (film) => ({
+  type: ActionType.LOAD_PROMO,
   payload: film,
 });
 

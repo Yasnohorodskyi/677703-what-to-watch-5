@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
 
 import MainScreen from "../main-screen/main-screen";
@@ -17,23 +16,13 @@ import {AppRoute} from "../../const";
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
 
-const App = (props) => {
-  const {
-    movieTitle,
-    genre,
-    releaseDate,
-  } = props;
-
-
+const App = () => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}
           render={({history}) => (
             <MainScreen
-              movieTitle={movieTitle}
-              genre={genre}
-              releaseDate={releaseDate}
               history={history}
             />
           )}
@@ -77,10 +66,6 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  movieTitle: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
-};
+App.propTypes = {};
 
 export default App;

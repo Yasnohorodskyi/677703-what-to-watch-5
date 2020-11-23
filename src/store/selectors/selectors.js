@@ -5,6 +5,10 @@ export const getRequestError = (state) => {
   return state[NameSpace.STATE].requestError;
 };
 
+export const getPromo = (state) => {
+  return state[NameSpace.DATA].promo;
+};
+
 export const getAllFilms = (state) => {
   return state[NameSpace.DATA].allFilms;
 };
