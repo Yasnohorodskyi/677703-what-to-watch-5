@@ -7,6 +7,7 @@ export const RatingDesc = {
 };
 
 export const DEFAULT_RENDERED_FILMS_COUNT = 8;
+export const SHOW_MORE_FILMS_COUNT = 8;
 export const PLAYING_TIMEOUT = 1000;
 
 export const AuthorizationStatus = {

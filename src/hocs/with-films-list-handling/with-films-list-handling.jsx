@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types.js";
 
 
-import {DEFAULT_RENDERED_FILMS_COUNT} from "../../const.js";
+import {DEFAULT_RENDERED_FILMS_COUNT, SHOW_MORE_FILMS_COUNT} from "../../const.js";
 
 const withFilmsListHandling = (Component) => {
   class WithFilmsListHandling extends PureComponent {
@@ -29,7 +29,8 @@ const withFilmsListHandling = (Component) => {
       this.setState((prevState, props) => {
         const length = props.films.length;
         const oldCount = prevState.renderedFilmsCount;
-        const newCount = ((oldCount + 8) > (length - 1)) ? length : (oldCount + 8);
+        const newCount = ((oldCount + SHOW_MORE_FILMS_COUNT) > (length - 1))
+          ? length : (oldCount + SHOW_MORE_FILMS_COUNT);
 
         return ({
           renderedFilmsCount: newCount,
