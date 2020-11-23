@@ -43,14 +43,14 @@ const App = (props) => {
         </Route>
         <PrivateRoute
           exact
-          path="/mylist"
+          path={AppRoute.MYLIST}
           render={({history}) => (
             <MyListScreen
               history={history}
             />
           )}
         />
-        <Route exact path="/films/:id"
+        <Route exact path={AppRoute.FILMS_ID}
           render={({match, history}) => (
             <MoviePageScreen
               match={match}
@@ -60,10 +60,10 @@ const App = (props) => {
         />
         <PrivateRoute
           exact
-          path="/films/:id/review"
+          path={AppRoute.REVIEW_ID}
           render={() => <AddReviewScreen />}
         />
-        <Route exact path="/player/:id"
+        <Route exact path={AppRoute.PLAYER_ID}
           render={({match, history}) => (
             <PlayerScreenWrapped
               match={match}

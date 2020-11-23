@@ -20,6 +20,7 @@ export const AppRoute = {
   MYLIST: `/mylist`,
   FILMS_ID: `/films/:id`,
   PLAYER_ID: `/player/:id`,
+  REVIEW_ID: `/films/:id/review`,
   ERROR: `/error`,
 };
 
