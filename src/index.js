@@ -7,9 +7,15 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {createAPI} from "./services/api.js";
 import rootReducer from "./store/reducers/root-reducer.js";
 import App from "./components/app/app";
-import {fetchFilmsList} from "./store/api-action.js";
+import {checkAuth, fetchFilmsList} from "./store/api-action.js";
+import {requireAuthorization} from "./store/action.js";
+import {AuthorizationStatus} from "./const.js";
+import {redirect} from "./store/middlewares/redirect.js";
 
-const api = createAPI();
+
+const api = createAPI(
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
 
 const Settings = {
   MOVIE_TITLE: `The Grand Budapest Hotel`,
@@ -20,12 +26,14 @@ const Settings = {
 const store = createStore(
     rootReducer,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
 Promise.all([
-  store.dispatch(fetchFilmsList())
+  store.dispatch(fetchFilmsList()),
+  store.dispatch(checkAuth()),
 ])
 .then(() => {
   ReactDOM.render(
