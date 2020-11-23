@@ -1,6 +1,8 @@
 import {createSelector} from "reselect";
 import {NameSpace} from "../reducers/root-reducer";
 
+const MAX_GENRES_NUMBER = 9;
+
 export const getRequestError = (state) => {
   return state[NameSpace.STATE].requestError;
 };
@@ -58,6 +60,13 @@ export const getAllGenres = createSelector(
       });
 
       return genres;
+    }
+);
+
+export const getShortGenresList = createSelector(
+    getAllGenres,
+    (allGenres) => {
+      return allGenres.slice(0, MAX_GENRES_NUMBER);
     }
 );
 

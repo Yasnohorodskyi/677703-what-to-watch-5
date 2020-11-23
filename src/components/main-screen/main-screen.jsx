@@ -5,7 +5,7 @@ import {changeActiveGenre} from "../../store/action.js";
 import {connect} from "react-redux";
 import {
   getGenreFilms, getAllFilms, getActiveGenre,
-  getAllGenres, getPromo, getAuthorizationStatus
+  getPromo, getAuthorizationStatus, getShortGenresList
 } from "../../store/selectors/selectors.js";
 import {Link} from "react-router-dom";
 
@@ -36,7 +36,7 @@ const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 const MainScreen = (props) => {
   const {
     promo,
-    allGenres,
+    shortGenresList,
     genreFilms,
     activeGenre,
     onGenreChange,
@@ -80,7 +80,7 @@ const MainScreen = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenresList
-          genres={allGenres}
+          genres={shortGenresList}
           activeGenre={activeGenre}
           onGenreChange={onGenreChange}
         />
@@ -114,14 +114,14 @@ MainScreen.propTypes = {
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
-  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shortGenresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   promo: getPromo(state),
   genreFilms: getGenreFilms(state),
-  allGenres: getAllGenres(state),
+  shortGenresList: getShortGenresList(state),
   allFilms: getAllFilms(state),
   activeGenre: getActiveGenre(state),
   authorizationStatus: getAuthorizationStatus(state),
