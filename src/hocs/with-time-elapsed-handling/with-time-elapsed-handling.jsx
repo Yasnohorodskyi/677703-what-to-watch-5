@@ -14,16 +14,17 @@ const withTimeElapsedHandling = (Component) => {
 
       this.state = {
         currentTime: ``,
-        videoRef: this.props.videoRef,
-
       };
       this.interval = null;
     }
 
     componentDidUpdate() {
-      const {videoRef} = this.props;
+      const {
+        videoRef,
+        isPlaying,
+      } = this.props;
 
-      if (videoRef) {
+      if (videoRef && isPlaying) {
         this.interval = setInterval(() => {
           this.setState({
             currentTime: getElapsedTime(videoRef),
@@ -49,6 +50,7 @@ const withTimeElapsedHandling = (Component) => {
 
   WithTimeElapsedHandling.propTypes = {
     videoRef: PropTypes.object,
+    isPlaying: PropTypes.bool.isRequired,
   };
 
   return WithTimeElapsedHandling;
