@@ -7,6 +7,7 @@ const AddReviewForm = (props) => {
     handleRatingChange,
     handleTextChange,
     rating,
+    isSubmitActive,
   } = props;
 
   const stars = new Array(5).fill(`1`);
@@ -42,7 +43,13 @@ const AddReviewForm = (props) => {
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={!isSubmitActive}
+            >
+              Post
+            </button>
           </div>
 
         </div>

@@ -6,6 +6,11 @@ export const RatingDesc = {
   AWESOME: `Awesome`,
 };
 
+export const IsPosted = {
+  SUCCESS: `SUCCESS`,
+  FAIL: `FAIL`,
+};
+
 export const DEFAULT_RENDERED_FILMS_COUNT = 8;
 export const SHOW_MORE_FILMS_COUNT = 8;
 export const PLAYING_TIMEOUT = 1000;
