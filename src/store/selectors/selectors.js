@@ -29,13 +29,13 @@ export const getActiveGenre = (state) => {
 export const getAuthorizationStatus = (state) => {
   return state[NameSpace.USER].authorizationStatus;
 };
-export const getCurrnetFilm = (state) => {
+export const getCurrentFilm = (state) => {
   return state[NameSpace.DATA].film;
 };
 
 export const getSimilarFilms = createSelector(
     getAllFilms,
-    getCurrnetFilm,
+    getCurrentFilm,
     (allfilms, currentFilm) => {
       if (!currentFilm) {
         return [];

@@ -2,7 +2,8 @@ import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {addReview} from "../../store/api-action.js";
-import {getActiveItemId} from "../../store/selectors/selectors.js";
+import {PostStatus} from "../../const.js";
+import {redirectToRoute} from "../../store/action.js";
 
 const RATING_MIN = 1;
 const RATING_MAX = 5;
@@ -18,7 +19,7 @@ const withFormHandling = (Component) => {
         reviewText: ``,
         rating: 0,
         isSubmitActive: false,
-        isPostRequestSuccessed: false,
+        isFormDisabled: false,
       };
 
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,10 +37,10 @@ const withFormHandling = (Component) => {
 
       const {
         postCommentAction,
-        activeItemId
+        filmId
       } = this.props;
-
-      postCommentAction(activeItemId, this.state.rating, this.state.reviewText, this._onSubmitCb);
+      this.setState({isFormDisabled: true});
+      postCommentAction(filmId, this.state.rating, this.state.reviewText, this._onSubmitCb);
     }
 
     _setSubmitActivity() {
@@ -53,10 +54,15 @@ const withFormHandling = (Component) => {
       }
     }
 
-    _onSubmitCb(isPosted) {
-      this.setState({
-        isPostRequestSuccessed: isPosted,
-      });
+    _onSubmitCb(postStatus) {
+      if (postStatus === PostStatus.SUCCESS) {
+        this.props.redirectAction(this.props.filmId);
+      } else {
+        this.setState({
+          isFormDisabled: false,
+        });
+      }
+
     }
 
     handleRatingChange(evt) {
@@ -78,6 +84,7 @@ const withFormHandling = (Component) => {
           handleRatingChange={this.handleRatingChange}
           rating={this.state.rating}
           isSubmitActive={this.state.isSubmitActive}
+          isFormDisabled={this.state.isFormDisabled}
         />
       );
     }
@@ -85,20 +92,20 @@ const withFormHandling = (Component) => {
 
   WithFormHandling.propTypes = {
     postCommentAction: PropTypes.func.isRequired,
-    activeItemId: PropTypes.number.isRequired,
+    redirectAction: PropTypes.func.isRequired,
+    filmId: PropTypes.number.isRequired,
   };
-
-  const mapStateToProps = (state) => ({
-    activeItemId: getActiveItemId(state),
-  });
 
   const mapDispatchToProps = (dispatch) => ({
     postCommentAction(filmId, rating, comment, cb) {
       dispatch(addReview(filmId, rating, comment, cb));
+    },
+    redirectAction(id) {
+      dispatch(redirectToRoute(`/films/${id}`));
     }
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(WithFormHandling);
+  return connect(null, mapDispatchToProps)(WithFormHandling);
 };
 
 export default withFormHandling;

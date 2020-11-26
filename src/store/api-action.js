@@ -1,5 +1,5 @@
-import {postComment, redirectToRoute, setRequestError} from "./action.js";
-import {APIRoute, AppRoute, AuthorizationStatus, IsPosted} from "../const.js";
+import {postComment, redirectToRoute, setError} from "./action.js";
+import {APIRoute, AppRoute, AuthorizationStatus, PostStatus} from "../const.js";
 import {loadFilms, loadFilm, requireAuthorization, loadPromo, loadComments} from "./action.js";
 
 const handleError = (dispatch, error) => {
@@ -39,14 +39,14 @@ export const fetchFilmReviews = (id) => (dispatch, __getState, api) => (
 );
 
 export const addReview = (filmId, rating, comment, cb) => (dispatch, __getState, api) => (
-  api.post(`/commentsZ/${filmId}`, {rating, comment})
+  api.post(`/comments/${filmId}`, {rating, comment})
     .then(() => {
       dispatch(postComment({rating, comment}));
       dispatch(redirectToRoute(`/films/${filmId}`));
-      cb(IsPosted.SUCCESS);
+      cb(PostStatus.SUCCESS);
     })
     .catch((error) => {
-      cb(IsPosted.FAIL);
+      cb(PostStatus.FAIL);
       handleError(dispatch, error);
     })
 );

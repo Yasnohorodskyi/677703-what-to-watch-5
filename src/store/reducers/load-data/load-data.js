@@ -37,7 +37,7 @@ const initialState = {
   allGenres: [],
   genre: `All genres`,
   genreFilms: [],
-  films: null,
+  films: {},
 };
 
 const loadData = (state = initialState, action) => {
@@ -69,7 +69,7 @@ const loadData = (state = initialState, action) => {
       });
     case ActionType.RESET_FILM:
       return extend(state, {
-        film: null,
+        film: {},
         filmReviews: [],
       });
   }

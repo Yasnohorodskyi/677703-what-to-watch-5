@@ -50,7 +50,7 @@ const App = () => {
         <PrivateRoute
           exact
           path={AppRoute.REVIEW_ID}
-          render={() => <AddReviewScreen />}
+          render={({match}) => <AddReviewScreen match={match}/>}
         />
         <Route exact path={AppRoute.PLAYER_ID}
           render={({match, history}) => (

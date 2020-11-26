@@ -23,7 +23,7 @@ export const extend = (a, b) => {
 
 export const getReviewDate = (dateString) => {
   const date = new Date(dateString);
-  const month = date.toLocaleString('default', { month: 'long' });
+  const month = date.toLocaleString(`default`, {month: `long`});
   const year = date.getFullYear();
   const day = date.getDay();
 
@@ -31,4 +31,8 @@ export const getReviewDate = (dateString) => {
     forHuman: `${month} ${day}, ${year}`,
     forRobot: `${year}-${date.getMonth() + 1}-${day}`,
   };
+};
+
+export const isObjEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
 };

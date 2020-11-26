@@ -6,7 +6,7 @@ export const RatingDesc = {
   AWESOME: `Awesome`,
 };
 
-export const IsPosted = {
+export const PostStatus = {
   SUCCESS: `SUCCESS`,
   FAIL: `FAIL`,
 };
