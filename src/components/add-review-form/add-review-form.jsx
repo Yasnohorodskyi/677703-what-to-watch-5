@@ -4,17 +4,19 @@ import PropTypes from "prop-types";
 const AddReviewForm = (props) => {
   const {
     handleSubmit,
+    handleRatingChange,
     handleTextChange,
     rating,
   } = props;
 
   const stars = new Array(5).fill(`1`);
   const getChecked = (index) => rating === index;
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
+      <form action="#" className="add-review__form" onSubmit={handleSubmit} >
         <div className="rating">
-          <div className="rating__stars">
+          <div className="rating__stars" onChange={handleRatingChange}>
             {stars.map((star, index) =>(
               <React.Fragment key={`star-${index + 1}`}>
                 <input
@@ -23,9 +25,9 @@ const AddReviewForm = (props) => {
                   type="radio"
                   name="rating"
                   value={index + 1}
-                  checked={getChecked(index + 1)}
+                  defaultChecked={getChecked(index + 1)}
                 />
-                <label className="rating__label" htmlFor="star-1">Rating {`${index + 1}`}</label>
+                <label className="rating__label" htmlFor={`star-${index + 1}`}>Rating {`${index + 1}`}</label>
               </React.Fragment>
             ))}
           </div>
@@ -51,6 +53,7 @@ const AddReviewForm = (props) => {
 
 AddReviewForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleRatingChange: PropTypes.func.isRequired,
   handleTextChange: PropTypes.func.isRequired,
   rating: PropTypes.number.isRequired,
 };
