@@ -38,9 +38,13 @@ const Tabs = (props) => {
 };
 
 Tabs.propTypes = {
-  tabs: PropTypes.arrayOf(tabType).isRequired,
+  tabs: PropTypes.arrayOf(tabType),
   onTabClick: PropTypes.func.isRequired,
   activeTabId: PropTypes.string,
+};
+
+Tabs.defaultProps = {
+  tabs: {},
 };
 
 export default Tabs;

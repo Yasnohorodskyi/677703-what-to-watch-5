@@ -1,5 +1,6 @@
 import React from "react";
-import {getRatingDesc, getReviewDate} from "../../utils.js";
+import {getRatingDesc, getReviewDate, isObjEmpty} from "../../utils.js";
+
 
 const TabLabels = {
   OVERVIEW: `Overview`,
@@ -124,21 +125,23 @@ const getReviewsContent = (reviews) => {
 };
 
 export const getTabsContent = (currentFilm, reviews) => {
+  const isTabsEmpty = isObjEmpty(currentFilm) && isObjEmpty(currentFilm);
+
   return [
     {
       id: TabLabels.OVERVIEW,
       title: TabLabels.OVERVIEW,
-      render: () => getOverviewContent(currentFilm),
+      render: () => !isTabsEmpty ? getOverviewContent(currentFilm) : `emptyTab`,
     },
     {
       id: TabLabels.DETAILS,
       title: TabLabels.DETAILS,
-      render: () => getDetailsContent(currentFilm),
+      render: () => !isTabsEmpty ? getDetailsContent(currentFilm) : `emptyTab`,
     },
     {
       id: TabLabels.REVIEWS,
       title: TabLabels.REVIEWS,
-      render: () => getReviewsContent(reviews),
+      render: () => !isTabsEmpty ? getReviewsContent(reviews) : `emtpyTab`,
     },
   ];
 };

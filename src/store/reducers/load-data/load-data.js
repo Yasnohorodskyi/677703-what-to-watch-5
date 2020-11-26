@@ -37,7 +37,7 @@ const initialState = {
   allGenres: [],
   genre: `All genres`,
   genreFilms: [],
-  films: {},
+  film: {},
 };
 
 const loadData = (state = initialState, action) => {
