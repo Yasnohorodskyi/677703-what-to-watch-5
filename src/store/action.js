@@ -8,7 +8,8 @@ export const ActionType = {
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SET_ACTIVE_ITEM_ID: `SET_ACTIVE_ITEM_ID`,
-  SET_REQUEST_ERROR: `SET_REQUEST_ERROR`,
+  SET_ERROR: `SET_ERROR`,
+  RESET_ERROR: `RESET_ERROR`,
   RESET_FILM: `RESET_FILM`,
 };
 
@@ -55,9 +56,12 @@ export const redirectToRoute = (url) => ({
   payload: url,
 });
 
-export const setRequestError = (error) => ({
-  type: ActionType.SET_REQUEST_ERROR,
+export const setError = (error) => ({
+  type: ActionType.SET_ERROR,
   payload: error,
+});
+export const resetError = () => ({
+  type: ActionType.RESET_ERROR,
 });
 
 export const resetFilm = () => ({

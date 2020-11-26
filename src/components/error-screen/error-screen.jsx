@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../const.js";
-import {getRequestError} from "../../store/selectors/selectors.js";
+import {getError} from "../../store/selectors/selectors.js";
+import {resetError} from "../../store/action.js";
 
 const erorrStyle = {
   display: `flex`,
@@ -17,12 +18,20 @@ const erorrStyle = {
   height: `auto`,
   zIndex: `10`,
   backgroundColor: `red`,
+  paddingBottom: `30px`,
 };
-const ErrorScreen = (props) => {
-  const {error} = props;
 
-  console.log(`error was updated`);
-  console.log(error);
+const styleP = {
+  textAlign: `center`,
+};
+
+
+const ErrorScreen = (props) => {
+  const {
+    error,
+    resetErrorAction,
+  } = props;
+
   if (!error) {
     return null;
   }
@@ -31,23 +40,29 @@ const ErrorScreen = (props) => {
       <h1>Error</h1>
       <h2>Well poo. Sadly, the website had a bad day.</h2>
 
-      <p>{error.message}</p>
-      <p>{error.stack}</p>
+      <p style={styleP}>{error.message}</p>
+      <p style={styleP}>{error.stack}</p>
 
-      <Link to={AppRoute.ROOT}>
-        Go to main page
-      </Link>
+      <button onClick={resetErrorAction}>
+        RESET ERROR
+      </button>
     </section>
   </React.Fragment>;
 };
 
 ErrorScreen.propTypes = {
   error: PropTypes.object,
+  resetErrorAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  error: getRequestError(state),
+  error: getError(state),
+});
+const mapDispatchToProps = (dispatch) => ({
+  resetErrorAction() {
+    dispatch(resetError());
+  }
 });
 
 export {ErrorScreen};
-export default connect(mapStateToProps)(ErrorScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorScreen);

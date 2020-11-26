@@ -3,8 +3,8 @@ import {NameSpace} from "../reducers/root-reducer";
 
 const MAX_GENRES_NUMBER = 9;
 
-export const getRequestError = (state) => {
-  return state[NameSpace.STATE].requestError;
+export const getError = (state) => {
+  return state[NameSpace.STATE].error;
 };
 
 export const getPromo = (state) => {

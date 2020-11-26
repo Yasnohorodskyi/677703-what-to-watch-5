@@ -3,8 +3,7 @@ import {APIRoute, AppRoute, AuthorizationStatus, IsPosted} from "../const.js";
 import {loadFilms, loadFilm, requireAuthorization, loadPromo, loadComments} from "./action.js";
 
 const handleError = (dispatch, error) => {
-  dispatch(setRequestError(error));
-  // dispatch(redirectToRoute(AppRoute.ERROR));
+  dispatch(setError(error));
 };
 
 export const fetchFilmsList = () => (dispatch, __getState, api) => (
