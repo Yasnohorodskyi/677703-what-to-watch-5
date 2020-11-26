@@ -25,6 +25,7 @@ const withTimeElapsedHandling = (Component) => {
       } = this.props;
 
       if (videoRef && isPlaying) {
+        clearInterval(this.interval);
         this.interval = setInterval(() => {
           this.setState({
             currentTime: getElapsedTime(videoRef),
