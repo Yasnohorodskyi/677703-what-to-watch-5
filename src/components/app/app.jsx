@@ -9,12 +9,14 @@ import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
 import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
+import withAuthHandling from "../../hocs/with-auth-screen-handling/with-auth-screen-handling";
 import PrivateRoute from "../private-route/private-route";
 import browserHistory from "../../browser-history";
 import {AppRoute} from "../../const";
 
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
+const AuthScreenWrapped = withAuthHandling(AuthScreen);
 
 const App = () => {
   return (
@@ -28,7 +30,7 @@ const App = () => {
           )}
         />
         <Route exact path={AppRoute.LOGIN}>
-          <AuthScreen />
+          <AuthScreenWrapped />
         </Route>
         <PrivateRoute
           exact
