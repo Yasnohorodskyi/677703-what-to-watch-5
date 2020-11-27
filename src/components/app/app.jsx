@@ -44,7 +44,7 @@ const App = () => {
         <Route exact path={AppRoute.FILMS_ID}
           render={({match, history}) => (
             <MoviePageScreen
-              key={new Date()}
+              key={Date.now()}
               match={match}
               history={history}
             />

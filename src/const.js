@@ -20,6 +20,11 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const MyList = {
+  ADD: 1,
+  DELETE: 0,
+};
+
 export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
@@ -35,4 +40,25 @@ export const APIRoute = {
   LOGIN: `/login`,
   LOGOUT: `/logout`,
   PROMO: `/films/promo`,
+  FAVORITE: `/favorite`,
+};
+
+export const emptyFilm = {
+  id: -1,
+  title: ``,
+  fullImg: ``,
+  coverImg: ``,
+  backgroundImage: ``,
+  backgroundColor: ``,
+  video: ``,
+  previewVideoLink: ``,
+  description: ``,
+  rating: -1,
+  scoresCount: -1,
+  starring: [],
+  duration: -1,
+  genre: 1,
+  releaseDate: -1,
+  isFavorite: false,
+  similarFilmsID: [],
 };

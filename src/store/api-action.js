@@ -1,18 +1,37 @@
 import {postComment, redirectToRoute, setError} from "./action.js";
 import {APIRoute, AppRoute, AuthorizationStatus, PostStatus} from "../const.js";
-import {loadFilms, loadFilm, requireAuthorization, loadPromo, loadComments} from "./action.js";
+import {loadFilms, loadFilm, requireAuthorization, loadPromo, loadComments, loadFavorites, addToFavorites} from "./action.js";
 
 const handleError = (dispatch, error) => {
   dispatch(setError(error));
 };
 
 export const fetchFilmsList = () => (dispatch, __getState, api) => (
-  api.get(`/films`)
+  api.get(APIRoute.FILMS)
       .then(({data}) => dispatch(loadFilms(data)))
       .catch((error) => {
         handleError(dispatch, error);
       })
 );
+
+export const fetchFavoriteList = () => (dispatch, __getState, api) => (
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavorites(data)))
+    .catch((error) => {
+      handleError(dispatch, error);
+    })
+);
+
+export const addToFavoriteList = (filmId, status) => (dispatch, __getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${filmId}/${status}`)
+    .then(({data}) => {
+      dispatch(addToFavorites(data));
+    })
+    .catch((error) => {
+      handleError(dispatch, error);
+    })
+);
+
 
 export const fetchFilm = (id) => (dispatch, __getState, api) => (
   api.get(`/films/${id}`)

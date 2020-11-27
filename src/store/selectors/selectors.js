@@ -32,6 +32,13 @@ export const getAuthorizationStatus = (state) => {
 export const getCurrentFilm = (state) => {
   return state[NameSpace.DATA].film;
 };
+export const getFavoriteFilms = (state) => {
+  return state[NameSpace.USER].favoriteFilms;
+};
+
+export const getLastAddedToFavorite = (state) => {
+  return state[NameSpace.USER].lastAddedToFavorites;
+}
 
 export const getSimilarFilms = createSelector(
     getAllFilms,

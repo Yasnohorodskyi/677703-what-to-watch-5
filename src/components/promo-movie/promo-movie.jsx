@@ -1,7 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {AppRoute} from "../../const";
+import {addToFavorites} from "../../store/action";
+import {connect} from "react-redux";
 
 const PromoMovie = (props) => {
   const {
@@ -10,7 +11,12 @@ const PromoMovie = (props) => {
     releaseDate,
     coverImg,
     filmId,
+    addToFavoritesAction,
   } = props;
+
+  const handleAddToFavoritesButtonClick = () => {
+    addToFavoritesAction(filmId);
+  };
 
   return (
     <div className="movie-card__wrap">
@@ -36,13 +42,11 @@ const PromoMovie = (props) => {
                 <span>Play</span>
               </button>
             </Link>
-            <Link to={AppRoute.MYLIST}>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-            </Link>
+            <button className="btn btn--list movie-card__button" type="button" onClick={handleAddToFavoritesButtonClick}>
+              <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use>
+              </svg>
+              <span>My list</span>
+            </button>
           </div>
         </div>
       </div>
@@ -56,6 +60,14 @@ PromoMovie.propTypes = {
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
   coverImg: PropTypes.string.isRequired,
+  addToFavoritesAction: PropTypes.func.isRequired,
 };
 
-export default PromoMovie;
+const mapDispatchToProps = (dispatch) => ({
+  addToFavoritesAction(id) {
+    dispatch(addToFavorites(id));
+  }
+});
+
+export {PromoMovie};
+export default connect(null, mapDispatchToProps)(PromoMovie);

@@ -3,17 +3,21 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {filmType, reviewType} from "../../custom-prop-types";
 import {getTabsContent} from "./tabs-content";
+import {connect} from "react-redux";
 
 import FilmsList from "../films-list/films-list";
 import Tabs from "../tabs/tabs";
-import {connect} from "react-redux";
+import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
 
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {getAllFilms, getFilmReviews, getAuthorizationStatus, getCurrentFilm, getSimilarFilms} from "../../store/selectors/selectors";
-import {fetchFilm, fetchFilmReviews} from "../../store/api-action";
-import {AppRoute, AuthorizationStatus} from "../../const";
+import {
+  getAllFilms, getFilmReviews, getAuthorizationStatus, getCurrentFilm,
+  getSimilarFilms, getFavoriteFilms, getLastAddedToFavorite
+} from "../../store/selectors/selectors";
+import {fetchFilm, fetchFilmReviews, addToFavoriteList, fetchFavoriteList} from "../../store/api-action";
+import {AppRoute, AuthorizationStatus, MyList} from "../../const";
 import {isObjEmpty} from "../../utils";
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
@@ -28,9 +32,33 @@ const showReviewButton = (authorizationStatus, filmId) => {
   );
 };
 
+const getSignInMarkup = (authorizationStatus) => {
+  return (
+    authorizationStatus === AuthorizationStatus.AUTH ?
+      <Link to={AppRoute.MYLIST}>
+        <div className="user-block__avatar">
+          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+        </div>
+      </Link>
+
+      :
+      <Link to={`/login`} className="user-block__link">Sign in</Link>
+  );
+};
+
+const checkInFavoriteFilms = (favoriteFilms, filmId) => {
+  if (!favoriteFilms || favoriteFilms.length === 0) {
+    return false;
+  }
+  return favoriteFilms.map((film) => film.id)
+    .includes(filmId);
+};
+
 class MoviePageScreen extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.handleAddToFarovitesButtonClick = this.handleAddToFarovitesButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +66,9 @@ class MoviePageScreen extends PureComponent {
       currentFilm,
       filmReviews,
       loadFilmAction,
-      loadFilmReviews,
+      loadFilmReviewsAction,
+      loadFavoriteListAction,
+      favoriteFilms,
       match,
     } = this.props;
     const filmId = parseInt(match.params.id, 10);
@@ -48,8 +78,32 @@ class MoviePageScreen extends PureComponent {
     }
 
     if (!filmReviews || isObjEmpty(filmReviews)) {
-      loadFilmReviews(filmId);
+      loadFilmReviewsAction(filmId);
     }
+
+    if (favoriteFilms || isObjEmpty(favoriteFilms)) {
+      loadFavoriteListAction();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.lastAddedToFavorites !== this.props.lastAddedToFavorites) {
+      this.props.loadFavoriteListAction();
+    }
+  }
+
+  handleAddToFarovitesButtonClick() {
+    const {
+      addToFavoritesAction,
+      favoriteFilms,
+      match,
+      loadFavoriteListAction,
+    } = this.props;
+    const filmId = parseInt(match.params.id, 10);
+    const status = checkInFavoriteFilms(favoriteFilms, filmId) ? MyList.DELETE : MyList.ADD;
+
+    addToFavoritesAction(filmId, status);
+    loadFavoriteListAction();
   }
 
   render() {
@@ -60,8 +114,10 @@ class MoviePageScreen extends PureComponent {
       authorizationStatus,
       match,
       history,
+      favoriteFilms,
     } = this.props;
     const filmId = parseInt(match.params.id, 10);
+    const isInFavoriteFilms = checkInFavoriteFilms(favoriteFilms, filmId);
 
     const tabs = getTabsContent(currentFilm, filmReviews);
     const {
@@ -90,9 +146,7 @@ class MoviePageScreen extends PureComponent {
             </div>
 
             <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
+              {getSignInMarkup(authorizationStatus)}
             </div>
           </header>
 
@@ -113,14 +167,16 @@ class MoviePageScreen extends PureComponent {
                     <span>Play</span>
                   </button>
                 </Link>
-                <Link to={`/mylist`}>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
-                </Link>
+                {/* <button className="btn btn--list movie-card__button" type="button" onClick={this.handleAddToFarovitesButtonClick}>
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
+                  <span>My list</span>
+                </button> */}
+                <AddToMylistButton
+                  isInList={isInFavoriteFilms}
+                  onClick={this.handleAddToFarovitesButtonClick}
+                />
                 {showReviewButton(authorizationStatus, filmId)}
               </div>
             </div>
@@ -182,14 +238,19 @@ MoviePageScreen.propTypes = {
   currentFilm: PropTypes.shape(filmType),
   similarFilms: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
   loadFilmAction: PropTypes.func.isRequired,
-  loadFilmReviews: PropTypes.func.isRequired,
+  loadFilmReviewsAction: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  addToFavoritesAction: PropTypes.func.isRequired,
+  favoriteFilms: PropTypes.arrayOf(PropTypes.shape(filmType)),
+  loadFavoriteListAction: PropTypes.func.isRequired,
+  lastAddedToFavorites: PropTypes.shape(filmType),
 };
 
 //  прописать по умолчанию пропсы
 MoviePageScreen.defaultProps = {
   currentFilm: {},
   filmReviews: {},
+  favoriteFilms: [],
 };
 
 const mapStateToProps = (state) => ({
@@ -198,14 +259,22 @@ const mapStateToProps = (state) => ({
   currentFilm: getCurrentFilm(state),
   similarFilms: getSimilarFilms(state),
   authorizationStatus: getAuthorizationStatus(state),
+  favoriteFilms: getFavoriteFilms(state),
+  lastAddedToFavorites: getLastAddedToFavorite(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadFilmAction(id) {
     dispatch(fetchFilm(id));
   },
-  loadFilmReviews(id) {
+  loadFilmReviewsAction(id) {
     dispatch(fetchFilmReviews(id));
+  },
+  addToFavoritesAction(id, status) {
+    dispatch(addToFavoriteList(id, status));
+  },
+  loadFavoriteListAction() {
+    dispatch(fetchFavoriteList());
   }
 });
 

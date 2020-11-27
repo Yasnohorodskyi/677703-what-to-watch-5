@@ -15,12 +15,12 @@ import FilmsList from "../films-list/films-list";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {AuthorizationStatus} from "../../const";
+import {AppRoute, AuthorizationStatus} from "../../const";
 
 const getSignInMarkup = (authorizationStatus) => {
   return (
     authorizationStatus === AuthorizationStatus.AUTH ?
-      <Link to={`/mylist`}>
+      <Link to={AppRoute.MYLIST}>
         <div className="user-block__avatar">
           <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
         </div>
@@ -109,13 +109,20 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  promo: PropTypes.shape(filmType).isRequired,
+  promo: filmType.isRequired,
   history: PropTypes.object.isRequired,
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
   shortGenresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+};
+
+MainScreen.defaultProps = {
+  promo: {},
+  genreFilms: [],
+  shortGenresList: [],
+  authorizationStatus: ``,
 };
 
 const mapStateToProps = (state) => ({

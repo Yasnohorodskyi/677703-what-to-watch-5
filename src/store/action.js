@@ -11,6 +11,8 @@ export const ActionType = {
   SET_ERROR: `SET_ERROR`,
   RESET_ERROR: `RESET_ERROR`,
   RESET_FILM: `RESET_FILM`,
+  ADD_TO_FAVORITES: `ADD_TO_FAVORITES`,
+  LOAD_FAVORITES: `LOAD_FAVORITES`,
 };
 
 export const setActiveItemId = (id) => ({
@@ -66,4 +68,14 @@ export const resetError = () => ({
 
 export const resetFilm = () => ({
   type: ActionType.RESET_FILM,
+});
+
+export const addToFavorites = (filmid) => ({
+  type: ActionType.ADD_TO_FAVORITES,
+  payload: filmid,
+});
+
+export const loadFavorites = (films) => ({
+  type: ActionType.LOAD_FAVORITES,
+  payload: films,
 });
