@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from "../../../const.js";
-import {extend} from "../../../utils.js";
+import {adaptFilm, extend} from "../../../utils.js";
 import {ActionType} from "../../action.js";
 
 const initialState = {
@@ -15,8 +15,9 @@ const user = (state = initialState, action) => {
         authorizationStatus: action.payload,
       });
     case ActionType.LOAD_FAVORITES:
+      const sourceFavorites = action.payload;
       return extend(state, {
-        favoriteFilms: action.payload,
+        favoriteFilms: sourceFavorites.map((film) => adaptFilm(film)),
       });
     case ActionType.ADD_TO_FAVORITES:
       return extend(state, {
