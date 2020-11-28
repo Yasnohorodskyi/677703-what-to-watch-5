@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import FilmsList from "../films-list/films-list";
 import Tabs from "../tabs/tabs";
 import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
+import ProfileSignButton from "../profile-sign-button/profile-sign-button";
 
 import withTabsHandling from "../../hocs/with-tabs-handling/with-tabs-handling";
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
@@ -29,20 +30,6 @@ const showReviewButton = (authorizationStatus, filmId) => {
       <Link to={`/films/${filmId}/review`} className="btn movie-card__button">Add review</Link>
       :
       ``
-  );
-};
-
-const getSignInMarkup = (authorizationStatus) => {
-  return (
-    authorizationStatus === AuthorizationStatus.AUTH ?
-      <Link to={AppRoute.MYLIST}>
-        <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-        </div>
-      </Link>
-
-      :
-      <Link to={`/login`} className="user-block__link">Sign in</Link>
   );
 };
 
@@ -144,10 +131,9 @@ class MoviePageScreen extends PureComponent {
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-
-            <div className="user-block">
-              {getSignInMarkup(authorizationStatus)}
-            </div>
+            <ProfileSignButton
+              authorizationStatus={authorizationStatus}
+            />
           </header>
 
           <div className="movie-card__wrap">
@@ -167,12 +153,6 @@ class MoviePageScreen extends PureComponent {
                     <span>Play</span>
                   </button>
                 </Link>
-                {/* <button className="btn btn--list movie-card__button" type="button" onClick={this.handleAddToFarovitesButtonClick}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button> */}
                 <AddToMylistButton
                   isInList={isInFavoriteFilms}
                   onClick={this.handleAddToFarovitesButtonClick}
@@ -246,7 +226,6 @@ MoviePageScreen.propTypes = {
   lastAddedToFavorites: PropTypes.shape(filmType),
 };
 
-//  прописать по умолчанию пропсы
 MoviePageScreen.defaultProps = {
   currentFilm: {},
   filmReviews: {},

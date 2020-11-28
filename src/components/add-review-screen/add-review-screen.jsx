@@ -4,10 +4,11 @@ import {connect} from "react-redux";
 import AddReviewForm from "../add-review-form/add-review-form";
 import {Link} from "react-router-dom";
 import withFormHandling from "../../hocs/with-form-handling/with-form-handling";
-import {getCurrentFilm} from "../../store/selectors/selectors";
+import {getAuthorizationStatus, getCurrentFilm} from "../../store/selectors/selectors";
 import {filmType} from "../../custom-prop-types";
 import ErrorScreen from "../error-screen/error-screen";
 import {fetchFilm} from "../../store/api-action";
+import ProfilSignButton from "../profile-sign-button/profile-sign-button";
 
 const AddReviewFormWrapped = withFormHandling(AddReviewForm);
 
@@ -33,6 +34,7 @@ class AddReviewScreen extends PureComponent {
     const {
       currentFilm,
       match,
+      authorizationStatus,
     } = this.props;
     const filmId = parseInt(match.params.id, 10);
 
@@ -67,11 +69,9 @@ class AddReviewScreen extends PureComponent {
                 </ul>
               </nav>
 
-              <div className="user-block">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </div>
+              <ProfilSignButton
+                authorizationStatus={authorizationStatus}
+              />
             </header>
 
             <div className="movie-card__poster movie-card__poster--small">
@@ -99,10 +99,12 @@ AddReviewScreen.propTypes = {
       id: PropTypes.string,
     }).isRequired,
   }).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currentFilm: getCurrentFilm(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
