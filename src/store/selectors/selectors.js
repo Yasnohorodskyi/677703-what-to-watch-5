@@ -38,7 +38,7 @@ export const getFavoriteFilms = (state) => {
 
 export const getLastAddedToFavorite = (state) => {
   return state[NameSpace.USER].lastAddedToFavorites;
-}
+};
 
 export const getSimilarFilms = createSelector(
     getAllFilms,

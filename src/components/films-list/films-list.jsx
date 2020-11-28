@@ -58,7 +58,7 @@ const FilmsList = (props) => {
 };
 
 FilmsList.propTypes = {
-  films: PropTypes.arrayOf(filmType).isRequired,
+  films: PropTypes.arrayOf(PropTypes.shape(filmType)).isRequired,
   history: PropTypes.object.isRequired,
   isMoreButtonVisible: PropTypes.bool.isRequired,
   onMoreButtonClick: PropTypes.func.isRequired,

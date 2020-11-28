@@ -59,7 +59,7 @@ const withFilmsListHandling = (Component) => {
   }
 
   WithFilmsListHandling.propTypes = {
-    films: PropTypes.arrayOf(filmType).isRequired,
+    films: PropTypes.arrayOf(PropTypes.shape(filmType)),
   };
 
   return WithFilmsListHandling;

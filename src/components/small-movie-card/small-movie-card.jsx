@@ -59,7 +59,7 @@ SmallMovieCard.propTypes = {
   startTimer: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
   onVideoMount: PropTypes.func.isRequired,
-  film: filmType
+  film: PropTypes.shape(filmType),
 };
 
 export default SmallMovieCard;

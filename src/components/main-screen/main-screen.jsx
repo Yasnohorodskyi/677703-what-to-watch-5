@@ -47,7 +47,7 @@ const MainScreen = (props) => {
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={promo.backgroundImage} alt={promo.title} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -67,11 +67,7 @@ const MainScreen = (props) => {
       </header>
 
       <PromoMovie
-        movieTitle={promo.title}
-        genre={promo.genre}
-        releaseDate={promo.releaseDate}
-        coverImg={promo.coverImg}
-        filmId={promo.id}
+        promoFilm={promo}
       />
     </section >
 
@@ -109,7 +105,7 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  promo: filmType.isRequired,
+  promo: PropTypes.shape(filmType).isRequired,
   history: PropTypes.object.isRequired,
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,

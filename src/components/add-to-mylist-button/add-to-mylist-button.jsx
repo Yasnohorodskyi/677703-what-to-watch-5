@@ -29,6 +29,7 @@ const AddToMyListButton = (props) => {
 
 AddToMyListButton.propTypes = {
   isInList: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default AddToMyListButton;

@@ -51,7 +51,7 @@ class AuthScreen extends PureComponent {
               <div className="sign-in__field">
                 <input
                   className="sign-in__input"
-                  // type="email"
+                  type="email"
                   placeholder="Email address"
                   name="user-email"
                   id="user-email"

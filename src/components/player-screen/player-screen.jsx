@@ -29,6 +29,7 @@ const PlayerScreen = (props) => {
 
   const currentId = +match.params.id;
   const currentFilm = allFilms.find((film) => film.id === currentId);
+
   const {
     backgroundImage,
     video,

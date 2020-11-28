@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 const getElapsedTime = (videoRef) => {
   const currentTime = videoRef.currentTime;
   const duration = videoRef.duration;
+
+  if (!currentTime || !duration) {
+    return ``;
+  }
   return new Date(1000 * (duration - currentTime)).toISOString().substr(11, 8);
 };
 
