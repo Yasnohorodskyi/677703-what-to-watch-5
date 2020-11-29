@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test withActiveItem with internal Component connected to Redux withActiveItem is rendered correctly 1`] = `<div />`;

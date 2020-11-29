@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test withAuthScreenHandling with internal Component connected to Redux withAuthScreenHandling is rendered correctly 1`] = `<div />`;
