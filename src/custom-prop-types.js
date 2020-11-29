@@ -17,7 +17,6 @@ export const filmType = PropTypes.shape({
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  similarFilmsID: PropTypes.arrayOf(PropTypes.number).isRequired,
 }).isRequired;
 
 export const reviewType = PropTypes.shape({

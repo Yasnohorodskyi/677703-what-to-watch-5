@@ -55,7 +55,6 @@ export const adaptFilm = (film) => ({
   genre: film[`genre`],
   releaseDate: film[`released`],
   isFavorite: film[`is_favorite`],
-  similarFilmsID: [3, 7, 9],
 });
 
 export const adaptComment = (comment) => ({
