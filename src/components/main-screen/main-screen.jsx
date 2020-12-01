@@ -7,29 +7,14 @@ import {
   getGenreFilms, getAllFilms, getActiveGenre,
   getPromo, getAuthorizationStatus, getShortGenresList
 } from "../../store/selectors/selectors.js";
-import {Link} from "react-router-dom";
 
 import PromoMovie from "../promo-movie/promo-movie";
 import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
+import ProfileSignButton from "../profile-sign-button/profile-sign-button";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {AppRoute, AuthorizationStatus} from "../../const";
-
-const getSignInMarkup = (authorizationStatus) => {
-  return (
-    authorizationStatus === AuthorizationStatus.AUTH ?
-      <Link to={AppRoute.MYLIST}>
-        <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-        </div>
-      </Link>
-
-      :
-      <Link to={`/login`} className="user-block__link">Sign in</Link>
-  );
-};
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
@@ -61,9 +46,9 @@ const MainScreen = (props) => {
           </a>
         </div>
 
-        <div className="user-block">
-          {getSignInMarkup(authorizationStatus)}
-        </div>
+        <ProfileSignButton
+          authorizationStatus={authorizationStatus}
+        />
       </header>
 
       <PromoMovie
