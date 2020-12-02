@@ -12,10 +12,10 @@ const withActiveItem = (Component) => {
         activeItemId: -1,
       };
 
-      this._updateActiveItem = this._updateActiveItem.bind(this);
+      this.updateActiveItem = this.updateActiveItem.bind(this);
     }
 
-    _updateActiveItem(id) {
+    updateActiveItem(id) {
       this.setState({activeItemId: id});
       this.props.setActiveItemIdAction(id);
     }
@@ -24,7 +24,7 @@ const withActiveItem = (Component) => {
       return (
         <Component
           {...this.props}
-          updateActiveItem={this._updateActiveItem}
+          updateActiveItem={this.updateActiveItem}
           activeItemId={this.state.activeItemId}
         />
       );

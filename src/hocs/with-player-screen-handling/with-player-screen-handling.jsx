@@ -11,17 +11,17 @@ const withPlayerScreenHandling = (Component) => {
         isPlaying: false,
       };
 
-      this._handleVideoMount = this._handleVideoMount.bind(this);
-      this._handlePlayButtonClick = this._handlePlayButtonClick.bind(this);
-      this._handleFullscreenButtonClick = this._handleFullscreenButtonClick.bind(this);
-      this._handleExitButtonClick = this._handleExitButtonClick.bind(this);
+      this.handleVideoMount = this.handleVideoMount.bind(this);
+      this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+      this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);
+      this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
     }
 
-    _handleVideoMount(videoRef) {
+    handleVideoMount(videoRef) {
       this.setState({videoRef});
     }
 
-    _handlePlayButtonClick() {
+    handlePlayButtonClick() {
       const video = this.state.videoRef;
       if (!this.state.isPlaying) {
         this.setState({isPlaying: true});
@@ -32,12 +32,12 @@ const withPlayerScreenHandling = (Component) => {
       }
     }
 
-    _handleFullscreenButtonClick() {
+    handleFullscreenButtonClick() {
       const video = this.state.videoRef;
       video.requestFullscreen();
     }
 
-    _handleExitButtonClick() {
+    handleExitButtonClick() {
       const video = this.state.videoRef;
       if (this.state.isPlaying) {
         video.pause();
@@ -49,12 +49,12 @@ const withPlayerScreenHandling = (Component) => {
       return (
         <Component
           {...this.props}
-          onPlayButtonClick={this._handlePlayButtonClick}
-          onVideoMount={this._handleVideoMount}
+          onPlayButtonClick={this.handlePlayButtonClick}
+          onVideoMount={this.handleVideoMount}
           isPlaying={this.state.isPlaying}
           videoRef={this.state.videoRef}
-          onFullscreenButtonClick={this._handleFullscreenButtonClick}
-          onExitButtonClick={this._handleExitButtonClick}
+          onFullscreenButtonClick={this.handleFullscreenButtonClick}
+          onExitButtonClick={this.handleExitButtonClick}
         />
       );
     }

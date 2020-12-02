@@ -1,6 +1,4 @@
 import React, {PureComponent} from "react";
-// import PropTypes from "prop-types";
-// import {filmType} from "../../custom-prop-types.js";
 import {PLAYING_TIMEOUT} from "../../const.js";
 
 
@@ -15,19 +13,19 @@ const withSmallMovieCardHandling = (Component) => {
       };
 
 
-      this._handleVideoMount = this._handleVideoMount.bind(this);
-      this._startTimer = this._startTimer.bind(this);
-      this._resetTimer = this._resetTimer.bind(this);
+      this.handleVideoMount = this.handleVideoMount.bind(this);
+      this.startTimer = this.startTimer.bind(this);
+      this.resetTimer = this.resetTimer.bind(this);
     }
 
-    _startTimer() {
+    startTimer() {
       const timer = setTimeout(() => {
         this.state.videoRef.play();
       }, PLAYING_TIMEOUT);
       this.setState({timer});
     }
 
-    _resetTimer() {
+    resetTimer() {
       if (this.state.timer) {
         this.state.videoRef.load();
       }
@@ -35,7 +33,7 @@ const withSmallMovieCardHandling = (Component) => {
       this.setState({timer: null});
     }
 
-    _handleVideoMount(videoRef) {
+    handleVideoMount(videoRef) {
       this.setState({videoRef});
     }
 
@@ -43,9 +41,9 @@ const withSmallMovieCardHandling = (Component) => {
       return (
         <Component
           {...this.props}
-          onVideoMount={this._handleVideoMount}
-          startTimer={this._startTimer}
-          resetTimer={this._resetTimer}
+          onVideoMount={this.handleVideoMount}
+          startTimer={this.startTimer}
+          resetTimer={this.resetTimer}
         />
       );
     }

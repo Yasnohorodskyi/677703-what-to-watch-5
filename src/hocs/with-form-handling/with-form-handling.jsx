@@ -25,11 +25,11 @@ const withFormHandling = (Component) => {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleRatingChange = this.handleRatingChange.bind(this);
       this.handleReviewChange = this.handleReviewChange.bind(this);
-      this._onSubmitCb = this._onSubmitCb.bind(this);
+      this.onSubmitCb = this.onSubmitCb.bind(this);
     }
 
     componentDidUpdate() {
-      this._setSubmitActivity();
+      this.setSubmitActivity();
     }
 
     handleSubmit(evt) {
@@ -40,10 +40,10 @@ const withFormHandling = (Component) => {
         filmId
       } = this.props;
       this.setState({isFormDisabled: true});
-      postCommentAction(filmId, this.state.rating, this.state.reviewText, this._onSubmitCb);
+      postCommentAction(filmId, this.state.rating, this.state.reviewText, this.onSubmitCb);
     }
 
-    _setSubmitActivity() {
+    setSubmitActivity() {
       const rating = this.state.rating;
       const text = this.state.reviewText;
       if (rating >= RATING_MIN && rating <= RATING_MAX &&
@@ -54,7 +54,7 @@ const withFormHandling = (Component) => {
       }
     }
 
-    _onSubmitCb(postStatus) {
+    onSubmitCb(postStatus) {
       if (postStatus === PostStatus.SUCCESS) {
         this.props.redirectAction(this.props.filmId);
       } else {

@@ -36,9 +36,5 @@ const withTabsHandling = (Component) => {
   return WithTabsHandling;
 };
 
-withTabsHandling.propTypes = {
-};
-
-
 export default withTabsHandling;
 

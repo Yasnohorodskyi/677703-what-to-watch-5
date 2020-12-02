@@ -70,9 +70,9 @@ export const resetFilm = () => ({
   type: ActionType.RESET_FILM,
 });
 
-export const addToFavorites = (filmid) => ({
+export const addToFavorites = (film) => ({
   type: ActionType.ADD_TO_FAVORITES,
-  payload: filmid,
+  payload: film,
 });
 
 export const loadFavorites = (films) => ({
