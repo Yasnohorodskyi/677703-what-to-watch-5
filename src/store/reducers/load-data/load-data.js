@@ -9,6 +9,7 @@ const initialState = {
   genre: `All genres`,
   genreFilms: [],
   film: {},
+  promo: {},
 };
 
 const loadData = (state = initialState, action) => {
