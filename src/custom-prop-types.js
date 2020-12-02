@@ -17,17 +17,15 @@ export const filmType = PropTypes.shape({
   genre: PropTypes.string.isRequired,
   releaseDate: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  similarFilmsID: PropTypes.arrayOf(PropTypes.number).isRequired,
 }).isRequired;
 
 export const reviewType = PropTypes.shape({
-  filmId: PropTypes.number.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    dateTime: PropTypes.string.isRequired,
-    rating: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-  })),
+  id: PropTypes.number.isRequired,
+  userID: PropTypes.number.isRequired,
+  userName: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
 });
 
 export const tabType = PropTypes.shape({

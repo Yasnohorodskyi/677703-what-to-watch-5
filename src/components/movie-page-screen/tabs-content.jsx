@@ -1,5 +1,6 @@
 import React from "react";
-import {getRatingDesc} from "../../utils.js";
+import {getRatingDesc, getReviewDate, isObjEmpty} from "../../utils.js";
+
 
 const TabLabels = {
   OVERVIEW: `Overview`,
@@ -87,11 +88,13 @@ const getDetailsContent = (currentFilm) => {
 
 const getReviewContent = (review, index) => {
   const {
-    text,
-    author,
-    dateTime,
+    userName,
     rating,
+    text,
+    date,
   } = review;
+
+  const reviewDate = getReviewDate(date);
 
   return (
     <div className="review" key={`review-${index}`}>
@@ -99,8 +102,8 @@ const getReviewContent = (review, index) => {
         <p className="review__text">{text}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{author}</cite>
-          <time className="review__date" dateTime="2016-12-24">{dateTime}</time>
+          <cite className="review__author">{userName}</cite>
+          <time className="review__date" dateTime={reviewDate.forRobot}>{reviewDate.forHuman}</time>
         </footer>
       </blockquote>
 
@@ -122,21 +125,23 @@ const getReviewsContent = (reviews) => {
 };
 
 export const getTabsContent = (currentFilm, reviews) => {
+  const isTabsEmpty = isObjEmpty(currentFilm) && isObjEmpty(currentFilm);
+
   return [
     {
       id: TabLabels.OVERVIEW,
       title: TabLabels.OVERVIEW,
-      render: () => getOverviewContent(currentFilm),
+      render: () => !isTabsEmpty ? getOverviewContent(currentFilm) : `emptyTab`,
     },
     {
       id: TabLabels.DETAILS,
       title: TabLabels.DETAILS,
-      render: () => getDetailsContent(currentFilm),
+      render: () => !isTabsEmpty ? getDetailsContent(currentFilm) : `emptyTab`,
     },
     {
       id: TabLabels.REVIEWS,
       title: TabLabels.REVIEWS,
-      render: () => getReviewsContent(reviews),
+      render: () => !isTabsEmpty ? getReviewsContent(reviews) : `emtpyTab`,
     },
   ];
 };

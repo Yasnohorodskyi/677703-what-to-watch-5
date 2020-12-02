@@ -7,6 +7,8 @@ const AddReviewForm = (props) => {
     handleRatingChange,
     handleTextChange,
     rating,
+    isSubmitActive,
+    isFormDisabled,
   } = props;
 
   const stars = new Array(5).fill(`1`);
@@ -14,7 +16,7 @@ const AddReviewForm = (props) => {
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleSubmit} >
+      <form action="#" className="add-review__form" onSubmit={handleSubmit} disabled={isFormDisabled}>
         <div className="rating">
           <div className="rating__stars" onChange={handleRatingChange}>
             {stars.map((star, index) =>(
@@ -26,6 +28,7 @@ const AddReviewForm = (props) => {
                   name="rating"
                   value={index + 1}
                   defaultChecked={getChecked(index + 1)}
+                  disabled={isFormDisabled}
                 />
                 <label className="rating__label" htmlFor={`star-${index + 1}`}>Rating {`${index + 1}`}</label>
               </React.Fragment>
@@ -39,10 +42,17 @@ const AddReviewForm = (props) => {
             id="review-text"
             placeholder="Review text"
             onChange={handleTextChange}
+            disabled={isFormDisabled}
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={!isSubmitActive}
+            >
+              Post
+            </button>
           </div>
 
         </div>
@@ -56,6 +66,8 @@ AddReviewForm.propTypes = {
   handleRatingChange: PropTypes.func.isRequired,
   handleTextChange: PropTypes.func.isRequired,
   rating: PropTypes.number.isRequired,
+  isSubmitActive: PropTypes.bool.isRequired,
+  isFormDisabled: PropTypes.bool.isRequired,
 };
 
 export default AddReviewForm;

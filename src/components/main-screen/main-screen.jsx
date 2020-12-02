@@ -3,36 +3,25 @@ import PropTypes from "prop-types";
 import {filmType} from "../../custom-prop-types";
 import {changeActiveGenre} from "../../store/action.js";
 import {connect} from "react-redux";
-import {getGenreFilms, getAllFilms, getActiveGenre, getAllGenres} from "../../store/selectors/selectors.js";
-import {Link} from "react-router-dom";
+import {
+  getGenreFilms, getAllFilms, getActiveGenre,
+  getPromo, getAuthorizationStatus, getShortGenresList
+} from "../../store/selectors/selectors.js";
 
 import PromoMovie from "../promo-movie/promo-movie";
 import GenresList from "../genres-list/genres-list";
 import FilmsList from "../films-list/films-list";
+import ProfileSignButton from "../profile-sign-button/profile-sign-button";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {AuthorizationStatus} from "../../const";
-
-const getSignInMarkup = (authorizationStatus) => {
-  return (
-    authorizationStatus === AuthorizationStatus.AUTH ?
-      <div className="user-block__avatar">
-        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-      </div>
-      :
-      <Link to={`/login`} className="user-block__link">Sign in</Link>
-  );
-};
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 const MainScreen = (props) => {
   const {
-    movieTitle,
-    genre,
-    releaseDate,
-    allGenres,
+    promo,
+    shortGenresList,
     genreFilms,
     activeGenre,
     onGenreChange,
@@ -43,7 +32,7 @@ const MainScreen = (props) => {
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={promo.backgroundImage} alt={promo.title} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -57,15 +46,13 @@ const MainScreen = (props) => {
           </a>
         </div>
 
-        <div className="user-block">
-          {getSignInMarkup(authorizationStatus)}
-        </div>
+        <ProfileSignButton
+          authorizationStatus={authorizationStatus}
+        />
       </header>
 
       <PromoMovie
-        movieTitle={movieTitle}
-        genre={genre}
-        releaseDate={releaseDate}
+        promoFilm={promo}
       />
     </section >
 
@@ -74,7 +61,7 @@ const MainScreen = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenresList
-          genres={allGenres}
+          genres={shortGenresList}
           activeGenre={activeGenre}
           onGenreChange={onGenreChange}
         />
@@ -103,23 +90,29 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  movieTitle: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
+  promo: PropTypes.shape(filmType).isRequired,
   history: PropTypes.object.isRequired,
   genreFilms: PropTypes.arrayOf(filmType).isRequired,
   onGenreChange: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
-  allGenres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shortGenresList: PropTypes.arrayOf(PropTypes.string).isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
+MainScreen.defaultProps = {
+  promo: {},
+  genreFilms: [],
+  shortGenresList: [],
+  authorizationStatus: ``,
+};
+
 const mapStateToProps = (state) => ({
+  promo: getPromo(state),
   genreFilms: getGenreFilms(state),
-  allGenres: getAllGenres(state),
+  shortGenresList: getShortGenresList(state),
   allFilms: getAllFilms(state),
   activeGenre: getActiveGenre(state),
-  authorizationStatus: state.USER.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

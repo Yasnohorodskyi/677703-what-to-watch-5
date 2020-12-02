@@ -29,8 +29,9 @@ const PlayerScreen = (props) => {
 
   const currentId = +match.params.id;
   const currentFilm = allFilms.find((film) => film.id === currentId);
+
   const {
-    fullImg,
+    backgroundImage,
     video,
   } = currentFilm;
 
@@ -38,7 +39,7 @@ const PlayerScreen = (props) => {
     <div className="player">
       <FullVideoPlayerWrapped
         src={video}
-        fullImg={`${fullImg}`}
+        fullImg={`${backgroundImage}`}
         onVideoMount={onVideoMount}
       />
 
@@ -54,6 +55,7 @@ const PlayerScreen = (props) => {
           </div>
           <TimeElapsedWrapped
             videoRef={videoRef}
+            isPlaying={isPlaying}
           />
         </div>
 

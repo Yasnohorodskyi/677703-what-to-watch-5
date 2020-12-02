@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should TimeElapsed render correctly 1`] = `
+<div
+  className="player__time-value"
+>
+  00:00:00
+</div>
+`;

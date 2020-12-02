@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Switch, Route, Router as BrowserRouter} from "react-router-dom";
 
 import MainScreen from "../main-screen/main-screen";
@@ -10,48 +9,42 @@ import MyListScreen from "../my-list-screen/my-list-screen";
 import PlayerScreen from "../player-screen/player-screen";
 
 import withPlayerScreenHandling from "../../hocs/with-player-screen-handling/with-player-screen-handling";
+import withAuthHandling from "../../hocs/with-auth-screen-handling/with-auth-screen-handling";
 import PrivateRoute from "../private-route/private-route";
 import browserHistory from "../../browser-history";
+import {AppRoute} from "../../const";
 
 
 const PlayerScreenWrapped = withPlayerScreenHandling(PlayerScreen);
+const AuthScreenWrapped = withAuthHandling(AuthScreen);
 
-const App = (props) => {
-  const {
-    movieTitle,
-    genre,
-    releaseDate,
-  } = props;
-
-
+const App = () => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/"
+        <Route exact path={AppRoute.ROOT}
           render={({history}) => (
             <MainScreen
-              movieTitle={movieTitle}
-              genre={genre}
-              releaseDate={releaseDate}
               history={history}
             />
           )}
         />
-        <Route exact path="/login">
-          <AuthScreen />
+        <Route exact path={AppRoute.LOGIN}>
+          <AuthScreenWrapped />
         </Route>
         <PrivateRoute
           exact
-          path="/mylist"
+          path={AppRoute.MYLIST}
           render={({history}) => (
             <MyListScreen
               history={history}
             />
           )}
         />
-        <Route exact path="/films/:id"
+        <Route exact path={AppRoute.FILMS_ID}
           render={({match, history}) => (
             <MoviePageScreen
+              key={Date.now()}
               match={match}
               history={history}
             />
@@ -59,10 +52,10 @@ const App = (props) => {
         />
         <PrivateRoute
           exact
-          path="/films/:id/review"
-          render={() => <AddReviewScreen />}
+          path={AppRoute.REVIEW_ID}
+          render={({match}) => <AddReviewScreen match={match}/>}
         />
-        <Route exact path="/player/:id"
+        <Route exact path={AppRoute.PLAYER_ID}
           render={({match, history}) => (
             <PlayerScreenWrapped
               match={match}
@@ -70,17 +63,12 @@ const App = (props) => {
             />
           )}
         >
-
         </Route>
       </Switch>
     </BrowserRouter>
   );
 };
 
-App.propTypes = {
-  movieTitle: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
-};
+App.propTypes = {};
 
 export default App;

@@ -1,9 +1,7 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
-import {login} from "../../store/api-action.js";
-import {connect} from "react-redux";
-import {AuthorizationStatus} from "../../const";
 import {Redirect} from "react-router-dom";
+
 
 class AuthScreen extends PureComponent {
   constructor(props) {
@@ -11,26 +9,22 @@ class AuthScreen extends PureComponent {
 
     this.loginRef = createRef();
     this.passwordRef = createRef();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-    const {onSubmit} = this.props;
-
-    onSubmit({
-      login: this.loginRef.current.value,
-      password: this.passwordRef.current.value,
-    });
+  componentDidMount() {
+    const {onFormMount} = this.props;
+    onFormMount(this.loginRef, this.passwordRef);
   }
 
   render() {
-    const {authorizationStatus} = this.props;
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
+    const {
+      isAuth,
+      onFormSubmit,
+      error,
+    } = this.props;
+    if (isAuth) {
       return (<Redirect to={`/`} />);
     }
-
 
     return (
       <div className="user-page">
@@ -48,8 +42,11 @@ class AuthScreen extends PureComponent {
 
         <div className="sign-in user-page__content">
           <form action="" className="sign-in__form"
-            onSubmit={this.handleSubmit}
+            onSubmit={onFormSubmit}
           >
+            <div className="sign-in__message">
+              <p>{error}</p>
+            </div>
             <div className="sign-in__fields">
               <div className="sign-in__field">
                 <input
@@ -100,19 +97,11 @@ class AuthScreen extends PureComponent {
 }
 
 AuthScreen.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  onFormMount: PropTypes.func.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.USER.authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {AuthScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
+export default AuthScreen;

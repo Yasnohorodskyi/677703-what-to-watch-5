@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test withFromHandling with internal Component connected to Redux withFromHandling is rendered correctly 1`] = `<div />`;

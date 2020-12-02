@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 const getElapsedTime = (videoRef) => {
   const currentTime = videoRef.currentTime;
   const duration = videoRef.duration;
+
+  if (!currentTime || !duration) {
+    return ``;
+  }
   return new Date(1000 * (duration - currentTime)).toISOString().substr(11, 8);
 };
 
@@ -14,16 +18,18 @@ const withTimeElapsedHandling = (Component) => {
 
       this.state = {
         currentTime: ``,
-        videoRef: this.props.videoRef,
-
       };
       this.interval = null;
     }
 
     componentDidUpdate() {
-      const {videoRef} = this.props;
+      const {
+        videoRef,
+        isPlaying,
+      } = this.props;
 
-      if (videoRef) {
+      if (videoRef && isPlaying) {
+        clearInterval(this.interval);
         this.interval = setInterval(() => {
           this.setState({
             currentTime: getElapsedTime(videoRef),
@@ -49,6 +55,7 @@ const withTimeElapsedHandling = (Component) => {
 
   WithTimeElapsedHandling.propTypes = {
     videoRef: PropTypes.object,
+    isPlaying: PropTypes.bool.isRequired,
   };
 
   return WithTimeElapsedHandling;

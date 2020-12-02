@@ -1,11 +1,21 @@
 import {createSelector} from "reselect";
 import {NameSpace} from "../reducers/root-reducer";
 
+const MAX_GENRES_NUMBER = 9;
+
+export const getError = (state) => {
+  return state[NameSpace.STATE].error;
+};
+
+export const getPromo = (state) => {
+  return state[NameSpace.DATA].promo;
+};
+
 export const getAllFilms = (state) => {
   return state[NameSpace.DATA].allFilms;
 };
-export const getAllReviews = (state) => {
-  return state[NameSpace.DATA].allReviews;
+export const getFilmReviews = (state) => {
+  return state[NameSpace.DATA].filmReviews;
 };
 
 export const getActiveItemId = (state) => {
@@ -19,13 +29,20 @@ export const getActiveGenre = (state) => {
 export const getAuthorizationStatus = (state) => {
   return state[NameSpace.USER].authorizationStatus;
 };
-export const getCurrnetFilm = (state) => {
+export const getCurrentFilm = (state) => {
   return state[NameSpace.DATA].film;
+};
+export const getFavoriteFilms = (state) => {
+  return state[NameSpace.USER].favoriteFilms;
+};
+
+export const getLastAddedToFavorite = (state) => {
+  return state[NameSpace.USER].lastAddedToFavorites;
 };
 
 export const getSimilarFilms = createSelector(
     getAllFilms,
-    getCurrnetFilm,
+    getCurrentFilm,
     (allfilms, currentFilm) => {
       if (!currentFilm) {
         return [];
@@ -50,6 +67,13 @@ export const getAllGenres = createSelector(
       });
 
       return genres;
+    }
+);
+
+export const getShortGenresList = createSelector(
+    getAllGenres,
+    (allGenres) => {
+      return allGenres.slice(0, MAX_GENRES_NUMBER);
     }
 );
 

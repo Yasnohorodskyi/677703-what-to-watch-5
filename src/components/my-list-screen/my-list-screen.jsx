@@ -1,73 +1,92 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import FilmsList from "../films-list/films-list";
-import {filmType} from "../../custom-prop-types.js";
+import {Link} from "react-router-dom";
 
 import withFilmsListHandling from "../../hocs/with-films-list-handling/with-films-list-handling";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
-import {getAllFilms} from "../../store/selectors/selectors";
+import {getFavoriteFilms} from "../../store/selectors/selectors";
+import {filmType} from "../../custom-prop-types";
+import {AppRoute} from "../../const";
+import {fetchFavoriteList} from "../../store/api-action";
 
 
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
-const MyListScreen = (props) => {
-  const {films, history} = props;
+class MyListScreen extends PureComponent {
 
-  return (
-    <div className="user-page">
-      <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+  componentDidMount() {
+    this.props.loadFavoriteListAction();
+  }
 
-        <h1 className="page-title user-page__title">My list</h1>
-
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+  render() {
+    const {
+      favoriteFilms,
+      history
+    } = this.props;
+    return (
+      <div className="user-page">
+        <header className="page-header user-page__head">
+          <div className="logo">
+            <Link to={AppRoute.ROOT} className="logo__link">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
           </div>
-        </div>
-      </header>
 
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
+          <h1 className="page-title user-page__title">My list</h1>
 
-        <FilmsListWrapped
-          films={films}
-          history={history}
-        />
-      </section>
+          <div className="user-block">
+            <div className="user-block__avatar">
+              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            </div>
+          </div>
+        </header>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
-    </div>
-  );
-};
+          <FilmsListWrapped
+            films={favoriteFilms}
+            history={history}
+          />
+        </section>
+
+        <footer className="page-footer">
+          <div className="logo">
+            <a href="main.html" className="logo__link logo__link--light">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </a>
+          </div>
+
+          <div className="copyright">
+            <p>© 2019 What to watch Ltd.</p>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+}
 
 MyListScreen.propTypes = {
-  films: PropTypes.arrayOf(filmType).isRequired,
+  favoriteFilms: PropTypes.arrayOf(PropTypes.shape(filmType)),
   history: PropTypes.object.isRequired,
+  loadFavoriteListAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  films: getAllFilms(state),
+  favoriteFilms: getFavoriteFilms(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFavoriteListAction() {
+    dispatch(fetchFavoriteList());
+  }
 });
 
 export {MyListScreen};
-export default connect(mapStateToProps)(MyListScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MyListScreen);

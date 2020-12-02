@@ -17,11 +17,13 @@ const withVideoHandling = (Component) => {
       const {src, onVideoMount} = this.props;
       const video = this._videoRef.current;
 
-      video.src = src;
+      if (video) {
+        video.src = src;
+        video.oncanplaythrough = () => this.setState({
+          isLoading: false,
+        });
+      }
 
-      video.oncanplaythrough = () => this.setState({
-        isLoading: false,
-      });
       onVideoMount(this._videoRef.current);
     }
 

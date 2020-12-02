@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should VideoPlayer render correctly 1`] = `
+<video
+  height="175"
+  muted="muted"
+  poster="img/the-grand-budapest-hotel.jpg"
+  src="https://some-link"
+  width="280"
+>
+  Please use another web browser with video tag support
+</video>
+`;
