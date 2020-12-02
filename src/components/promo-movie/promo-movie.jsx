@@ -23,6 +23,12 @@ class PromoMovie extends PureComponent {
     this.handleAddToFavoritesButtonClick = this.handleAddToFavoritesButtonClick.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.lastAddedToFavorites !== this.props.lastAddedToFavorites) {
+      this.props.loadFavoriteListAction();
+    }
+  }
+
   handleAddToFavoritesButtonClick() {
     const {
       addToFavoritesAction,
@@ -35,12 +41,6 @@ class PromoMovie extends PureComponent {
 
     addToFavoritesAction(promoFilm.id, status);
     loadFavoriteListAction();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.lastAddedToFavorites !== this.props.lastAddedToFavorites) {
-      this.props.loadFavoriteListAction();
-    }
   }
 
   render() {

@@ -15,6 +15,9 @@ import {fetchFavoriteList} from "../../store/api-action";
 const FilmsListWrapped = withFilmsListHandling(withActiveItem(FilmsList));
 
 class MyListScreen extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     this.props.loadFavoriteListAction();

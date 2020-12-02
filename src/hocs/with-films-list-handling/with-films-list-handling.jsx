@@ -14,7 +14,7 @@ const withFilmsListHandling = (Component) => {
         renderedFilmsCount: DEFAULT_RENDERED_FILMS_COUNT,
       };
 
-      this._handleMoreButtonClick = this._handleMoreButtonClick.bind(this);
+      this.handleMoreButtonClick = this.handleMoreButtonClick.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -25,7 +25,7 @@ const withFilmsListHandling = (Component) => {
       }
     }
 
-    _handleMoreButtonClick() {
+    handleMoreButtonClick() {
       this.setState((prevState, props) => {
         const length = props.films.length;
         const oldCount = prevState.renderedFilmsCount;
@@ -38,7 +38,7 @@ const withFilmsListHandling = (Component) => {
       });
     }
 
-    _getMoreButtonVisibility() {
+    getMoreButtonVisibility() {
       if (this.state.renderedFilmsCount < this.props.films.length) {
         return true;
       }
@@ -51,8 +51,8 @@ const withFilmsListHandling = (Component) => {
         <Component
           {...this.props}
           renderedFilmsCount={this.state.renderedFilmsCount}
-          onMoreButtonClick={this._handleMoreButtonClick}
-          isMoreButtonVisible={this._getMoreButtonVisibility()}
+          onMoreButtonClick={this.handleMoreButtonClick}
+          isMoreButtonVisible={this.getMoreButtonVisibility()}
         />
       );
     }
